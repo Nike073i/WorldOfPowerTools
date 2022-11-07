@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
         <ProjectReference Include="..\WorldOfPowerTools.Domain.Enums\WorldOfPowerTools.Domain.Enums.csproj" />
-        <ProjectReference Include="..\WorldOfPowerTools.Domain.Interfaces\WorldOfPowerTools.Domain.Interfaces.csproj" />
     </ItemGroup>
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
