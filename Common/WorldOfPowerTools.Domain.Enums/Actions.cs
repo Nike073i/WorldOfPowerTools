@@ -1,4 +1,3 @@
-using System;
 namespace WorldOfPowerTools.Domain.Enums
 {
     [Flags]
