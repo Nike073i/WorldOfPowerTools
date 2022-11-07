@@ -1,8 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-
+    <ItemGroup>
+        <ProjectReference Include="..\WorldOfPowerTools.Domain.Enums\WorldOfPowerTools.Domain.Enums.csproj" />
+        <ProjectReference Include="..\WorldOfPowerTools.Domain.Interfaces\WorldOfPowerTools.Domain.Interfaces.csproj" />
+    </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 </Project>
