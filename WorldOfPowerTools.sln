@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldOfPowerTools.API", "Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldOfPowerTools.Domain.Enums", "Common\WorldOfPowerTools.Domain.Enums\WorldOfPowerTools.Domain.Enums.csproj", "{3BD73529-F8EA-4103-AAC1-8A38836ACF8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldOfPowerTools.Domain.Interfaces", "Common\WorldOfPowerTools.Domain.Interfaces\WorldOfPowerTools.Domain.Interfaces.csproj", "{4F1539AE-4D08-41D5-B096-E21DBF77C8CC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,10 +48,6 @@ Global
 		{3BD73529-F8EA-4103-AAC1-8A38836ACF8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BD73529-F8EA-4103-AAC1-8A38836ACF8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BD73529-F8EA-4103-AAC1-8A38836ACF8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F1539AE-4D08-41D5-B096-E21DBF77C8CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F1539AE-4D08-41D5-B096-E21DBF77C8CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F1539AE-4D08-41D5-B096-E21DBF77C8CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F1539AE-4D08-41D5-B096-E21DBF77C8CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{68AFEF68-878E-40DF-930C-A1EFEB14D00E} = {C12FF1B3-7B11-4C5A-8A66-5AE984A1B9E4}
@@ -61,6 +55,5 @@ Global
 		{ECE63449-DD02-4369-8D1D-8BFDAA58AD4D} = {5F415898-88AB-443C-8A10-9380DA3E48EE}
 		{A4BB27E0-2AA4-43D0-BDE1-F8B2EBB0557A} = {A37655AF-DC80-4068-AB0A-7E6E9A0E52D7}
 		{3BD73529-F8EA-4103-AAC1-8A38836ACF8A} = {C12FF1B3-7B11-4C5A-8A66-5AE984A1B9E4}
-		{4F1539AE-4D08-41D5-B096-E21DBF77C8CC} = {C12FF1B3-7B11-4C5A-8A66-5AE984A1B9E4}
 	EndGlobalSection
 EndGlobal

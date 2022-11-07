@@ -3,10 +3,9 @@ using WorldOfPowerTools.Domain.ObjectValues;
 
 namespace WorldOfPowerTools.Domain.Entities
 {
-    public class User
+    public class User : Entity
     {
         private Cart _cart;
-        public Guid Id { get; }
         public string Login { get; private set; }
         public string PasswordHash { get; private set; }
         public PersonData? PersonData { get; set; }

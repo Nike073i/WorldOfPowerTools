@@ -3,10 +3,9 @@ using WorldOfPowerTools.Domain.Enums;
 
 namespace WorldOfPowerTools.Domain.Entities
 {
-    public class Order
+    public class Order : Entity
     {
         private Dictionary<Guid, CartLine> _products;
-        public Guid Id { get; }
         public Guid UserId { get; }
         public double Price { get; private set; }
         public Address Address { get; }

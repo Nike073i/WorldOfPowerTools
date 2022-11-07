@@ -2,9 +2,8 @@ using WorldOfPowerTools.Domain.Enums;
 
 namespace WorldOfPowerTools.Domain.Entities
 {
-    public class Product
+    public class Product : Entity
     {
-        public Guid Id { get; }
         public string Name { get; set; }
         public double Price { get; set; }
         public Category Category { get; set; }
