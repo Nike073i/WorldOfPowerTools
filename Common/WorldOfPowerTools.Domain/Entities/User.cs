@@ -13,6 +13,9 @@ namespace WorldOfPowerTools.Domain.Entities
         public Address? Address { get; set; }
         public Actions Rights { get; private set; }
 
+#nullable disable
+        protected User() { }
+
         public User(string login, string passwordHash, Actions rights)
         {
             throw new System.Exception("Not implemented");

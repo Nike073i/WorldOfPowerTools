@@ -6,6 +6,9 @@ namespace WorldOfPowerTools.Domain.ObjectValues
         public string SecondName { get; }
         public DateTime Birthday { get; }
 
+#nullable disable
+        protected PersonData() { }
+
         public PersonData(string firstName, string secondName, DateTime birthday)
         {
             throw new System.Exception("Not implemented");

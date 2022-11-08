@@ -13,6 +13,9 @@ namespace WorldOfPowerTools.Domain.Entities
         public OrderStatus Status { get; private set; }
         public DateTime DateCreated { get; }
 
+#nullable disable
+        protected Order() { }
+
         public Order(Guid userId, double price, Address address, ContactData contactData)
         {
             throw new System.Exception("Not implemented");

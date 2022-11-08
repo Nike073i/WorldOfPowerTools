@@ -11,6 +11,9 @@ namespace WorldOfPowerTools.Domain.Entities
         public int Quantity { get; private set; }
         public bool Availablity { get; private set; }
 
+#nullable disable
+        protected Product() { }
+
         public Product(string name, double price, Category category, string description, int quantity, bool availability = true)
         {
             throw new System.Exception("Not implemented");

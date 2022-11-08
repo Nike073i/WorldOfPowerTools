@@ -9,6 +9,9 @@ namespace WorldOfPowerTools.Domain.ObjectValues
         public int Flat { get; }
         public string PostalCode { get; }
 
+#nullable disable
+        protected Address() { }
+
         public Address(string country, string city, string street, string house, int flat, string postalCode)
         {
             throw new System.Exception("Not implemented");
