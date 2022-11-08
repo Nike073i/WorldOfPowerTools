@@ -6,12 +6,12 @@ namespace WorldOfPowerTools.Domain.Entities
     public class User : Entity
     {
         private Cart _cart;
-        public string Login { get; private set; }
-        public string PasswordHash { get; private set; }
-        public PersonData? PersonData { get; set; }
-        public ContactData? ContactData { get; set; }
-        public Address? Address { get; set; }
-        public Actions Rights { get; private set; }
+        public string Login { get; protected set; }
+        public string PasswordHash { get; protected set; }
+        public PersonData? PersonData { get; protected set; }
+        public ContactData? ContactData { get; protected set; }
+        public Address? Address { get; protected set; }
+        public Actions Rights { get; protected set; }
 
 #nullable disable
         protected User() { }

@@ -2,12 +2,12 @@ namespace WorldOfPowerTools.Domain.ObjectValues
 {
     public class Address
     {
-        public string Country { get; }
-        public string City { get; }
-        public string Street { get; }
-        public string House { get; }
-        public int Flat { get; }
-        public string PostalCode { get; }
+        public string Country { get; protected set; }
+        public string City { get; protected set; }
+        public string Street { get; protected set; }
+        public string House { get; protected set; }
+        public int Flat { get; protected set; }
+        public string PostalCode { get; protected set; }
 
 #nullable disable
         protected Address() { }

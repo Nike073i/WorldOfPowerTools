@@ -2,8 +2,8 @@ namespace WorldOfPowerTools.Domain.ObjectValues
 {
     public class CartLine
     {
-        public Guid ProductId { get; }
-        public int Quantity { get; }
+        public Guid ProductId { get; protected set; }
+        public int Quantity { get; protected set; }
 
 #nullable disable
         protected CartLine() { }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldOfPowerTools.DAL.Context;
 
@@ -11,9 +12,10 @@ using WorldOfPowerTools.DAL.Context;
 namespace WorldOfPowerTools.DAL.SqlServer.Migrations
 {
     [DbContext(typeof(WorldOfPowerToolsDb))]
-    partial class WorldOfPowerToolsDbModelSnapshot : ModelSnapshot
+    [Migration("20221108194050_FixCreatingColumnByField")]
+    partial class FixCreatingColumnByField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

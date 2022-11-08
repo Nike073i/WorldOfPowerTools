@@ -2,9 +2,9 @@ namespace WorldOfPowerTools.Domain.ObjectValues
 {
     public class PersonData
     {
-        public string FirstName { get; }
-        public string SecondName { get; }
-        public DateTime Birthday { get; }
+        public string FirstName { get; protected set; }
+        public string SecondName { get; protected set; }
+        public DateTime Birthday { get; protected set; }
 
 #nullable disable
         protected PersonData() { }

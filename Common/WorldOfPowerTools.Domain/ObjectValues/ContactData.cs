@@ -2,8 +2,8 @@ namespace WorldOfPowerTools.Domain.ObjectValues
 {
     public class ContactData
     {
-        public string ContactNumber { get; }
-        public string Email { get; }
+        public string ContactNumber { get; protected set; }
+        public string Email { get; protected set; }
 
 #nullable disable
         protected ContactData() { }

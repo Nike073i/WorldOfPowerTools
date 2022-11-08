@@ -6,12 +6,12 @@ namespace WorldOfPowerTools.Domain.Entities
     public class Order : Entity
     {
         private Dictionary<Guid, CartLine> _products;
-        public Guid UserId { get; }
-        public double Price { get; private set; }
-        public Address Address { get; }
-        public ContactData ContactData { get; }
-        public OrderStatus Status { get; private set; }
-        public DateTime DateCreated { get; }
+        public Guid UserId { get; protected set; }
+        public double Price { get; protected set; }
+        public Address Address { get; protected set; }
+        public ContactData ContactData { get; protected set; }
+        public OrderStatus Status { get; protected set; }
+        public DateTime DateCreated { get; protected set; }
 
 #nullable disable
         protected Order() { }
