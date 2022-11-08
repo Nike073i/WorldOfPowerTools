@@ -2,25 +2,13 @@ using WorldOfPowerTools.Domain.Entities;
 
 namespace WorldOfPowerTools.Domain.Repositories
 {
-    public class IRepository<TId, TEntity> where TEntity : Entity<TId>
+    public interface IRepository<TId, TEntity> where TEntity : Entity<TId>
     {
-        public TEntity SaveAsync(TEntity entity)
-        {
-            throw new System.Exception("Not implemented");
-        }
-        public TId RemoveByIdAsync(TId id)
-        {
-            throw new System.Exception("Not implemented");
-        }
-        public IEnumerable<TEntity> GetAllAsync(int? skip, int? take)
-        {
-            throw new System.Exception("Not implemented");
-        }
-        public TEntity? GetByIdAsync(TId id)
-        {
-            throw new System.Exception("Not implemented");
-        }
+        public TEntity SaveAsync(TEntity entity);
+        public TId RemoveByIdAsync(TId id);
+        public IEnumerable<TEntity> GetAllAsync(int? skip, int? take);
+        public TEntity? GetByIdAsync(TId id);
     }
 
-    public class IRepository<TEntity> : IRepository<Guid, TEntity> where TEntity : Entity<Guid> { }
+    public interface IRepository<TEntity> : IRepository<Guid, TEntity> where TEntity : Entity<Guid> { }
 }

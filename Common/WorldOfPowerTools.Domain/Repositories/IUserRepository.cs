@@ -2,11 +2,8 @@ using WorldOfPowerTools.Domain.Entities;
 
 namespace WorldOfPowerTools.Domain.Repositories
 {
-    public class IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
-        public User? GetByLoginAsync(string login)
-        {
-            throw new System.Exception("Not implemented");
-        }
+        public User? GetByLoginAsync(string login);
     }
 }

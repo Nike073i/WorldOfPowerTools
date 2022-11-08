@@ -3,11 +3,8 @@ using WorldOfPowerTools.Domain.Enums;
 
 namespace WorldOfPowerTools.Domain.Repositories
 {
-    public class IProductRepository
+    public interface IProductRepository : IRepository<Product>
     {
-        public IEnumerable<Product> GetByCategoryAsync(Category category, int? skip, int? take)
-        {
-            throw new System.Exception("Not implemented");
-        }
+        public IEnumerable<Product> GetByCategoryAsync(Category category, int? skip, int? take);
     }
 }
