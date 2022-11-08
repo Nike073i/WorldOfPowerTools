@@ -5,11 +5,11 @@ namespace WorldOfPowerTools.Domain.Repositories
 {
     public class IOrderRepository : IRepository<Order>
     {
-        public Order? GetByUserId(ref Guid id)
+        public Order? GetByUserIdAsync(Guid id)
         {
             throw new System.Exception("Not implemented");
         }
-        public IEnumerable<Order> GetByStatus(OrderStatus status, int? skip, int? take)
+        public IEnumerable<Order> GetByStatusAsync(OrderStatus status, int? skip, int? take)
         {
             throw new System.Exception("Not implemented");
         }

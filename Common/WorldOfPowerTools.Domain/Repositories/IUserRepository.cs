@@ -4,7 +4,7 @@ namespace WorldOfPowerTools.Domain.Repositories
 {
     public class IUserRepository
     {
-        public User? GetByLogin(string login)
+        public User? GetByLoginAsync(string login)
         {
             throw new System.Exception("Not implemented");
         }

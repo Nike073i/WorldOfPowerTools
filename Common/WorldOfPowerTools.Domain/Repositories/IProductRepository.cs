@@ -5,7 +5,7 @@ namespace WorldOfPowerTools.Domain.Repositories
 {
     public class IProductRepository
     {
-        public IEnumerable<Product> GetByCategory(Category category, int? skip, int? take)
+        public IEnumerable<Product> GetByCategoryAsync(Category category, int? skip, int? take)
         {
             throw new System.Exception("Not implemented");
         }

@@ -21,11 +21,11 @@ namespace WorldOfPowerTools.Domain.Entities
         {
             throw new System.Exception("Not implemented");
         }
-        public double AddPriceSanctions(ref double cost)
+        public double AddPriceSanctions(double cost)
         {
             throw new System.Exception("Not implemented");
         }
-        public Order ChangeStatus(ref OrderStatus status)
+        public Order ChangeStatus(OrderStatus status)
         {
             throw new System.Exception("Not implemented");
         }

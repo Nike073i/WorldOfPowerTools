@@ -22,7 +22,5 @@ namespace WorldOfPowerTools.Domain.Services
         {
             throw new System.Exception("Not implemented");
         }
-
     }
-
 }

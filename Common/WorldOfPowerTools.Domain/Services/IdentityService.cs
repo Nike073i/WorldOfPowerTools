@@ -16,7 +16,7 @@ namespace WorldOfPowerTools.Domain.Services
         {
             throw new System.Exception("Not implemented");
         }
-        public User? Registration(string login, string password)
+        public User Registration(string login, string password)
         {
             throw new System.Exception("Not implemented");
         }
