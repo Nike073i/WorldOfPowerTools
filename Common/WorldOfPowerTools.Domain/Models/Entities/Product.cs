@@ -1,6 +1,6 @@
 using WorldOfPowerTools.Domain.Enums;
 
-namespace WorldOfPowerTools.Domain.Entities
+namespace WorldOfPowerTools.Domain.Models.Entities
 {
     public class Product : Entity
     {
@@ -16,15 +16,15 @@ namespace WorldOfPowerTools.Domain.Entities
 
         public Product(string name, double price, Category category, string description, int quantity, bool availability = true)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
         public Product AddToStore(int quantity)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
         public Product RemoveFromStore(int quantity)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
     }
 }

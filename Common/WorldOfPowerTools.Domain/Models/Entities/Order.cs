@@ -1,7 +1,7 @@
-using WorldOfPowerTools.Domain.ObjectValues;
 using WorldOfPowerTools.Domain.Enums;
+using WorldOfPowerTools.Domain.Models.ObjectValues;
 
-namespace WorldOfPowerTools.Domain.Entities
+namespace WorldOfPowerTools.Domain.Models.Entities
 {
     public class Order : Entity
     {
@@ -18,19 +18,19 @@ namespace WorldOfPowerTools.Domain.Entities
 
         public Order(Guid userId, double price, Address address, ContactData contactData, IEnumerable<CartLine> cartLines)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
         public IEnumerable<CartLine> GetOrderItems()
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
         public double AddPriceSanctions(double cost)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
         public Order ChangeStatus(OrderStatus status)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
     }
 }

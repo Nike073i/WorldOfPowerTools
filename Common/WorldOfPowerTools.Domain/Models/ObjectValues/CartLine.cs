@@ -1,4 +1,4 @@
-namespace WorldOfPowerTools.Domain.ObjectValues
+namespace WorldOfPowerTools.Domain.Models.ObjectValues
 {
     public class CartLine
     {
@@ -10,7 +10,7 @@ namespace WorldOfPowerTools.Domain.ObjectValues
 
         public CartLine(Guid productId, int quantity)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
     }
 }

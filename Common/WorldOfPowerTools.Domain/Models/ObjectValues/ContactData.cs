@@ -1,4 +1,4 @@
-namespace WorldOfPowerTools.Domain.ObjectValues
+namespace WorldOfPowerTools.Domain.Models.ObjectValues
 {
     public class ContactData
     {
@@ -10,7 +10,7 @@ namespace WorldOfPowerTools.Domain.ObjectValues
 
         public ContactData(string contactNumber, string email)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
     }
 }

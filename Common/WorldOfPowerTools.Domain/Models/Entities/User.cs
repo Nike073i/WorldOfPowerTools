@@ -1,7 +1,7 @@
 using WorldOfPowerTools.Domain.Enums;
-using WorldOfPowerTools.Domain.ObjectValues;
+using WorldOfPowerTools.Domain.Models.ObjectValues;
 
-namespace WorldOfPowerTools.Domain.Entities
+namespace WorldOfPowerTools.Domain.Models.Entities
 {
     public class User : Entity
     {
@@ -18,31 +18,31 @@ namespace WorldOfPowerTools.Domain.Entities
 
         public User(string login, string passwordHash, Actions rights)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
         public User AllowAction(Actions action)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
         public User ProhibitAction(Actions action)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
         public IEnumerable<CartLine> GetCartProducts()
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
         public User AddProductInCart(Guid productId, int count)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
         public User RemoveProductFromCart(Guid productId, int? count = null)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
         public int ClearCart()
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
     }
 }

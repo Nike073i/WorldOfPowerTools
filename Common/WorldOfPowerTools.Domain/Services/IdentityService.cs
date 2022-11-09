@@ -1,4 +1,4 @@
-using WorldOfPowerTools.Domain.Entities;
+using WorldOfPowerTools.Domain.Models.Entities;
 using WorldOfPowerTools.Domain.Repositories;
 
 namespace WorldOfPowerTools.Domain.Services

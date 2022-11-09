@@ -2,7 +2,7 @@ using System.Net;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WorldOfPowerTools.Domain.Entities;
+using WorldOfPowerTools.Domain.Models.Entities;
 
 namespace WorldOfPowerTools.DAL.Context.Configurations
 {

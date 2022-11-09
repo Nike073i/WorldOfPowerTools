@@ -1,5 +1,5 @@
-using WorldOfPowerTools.Domain.Entities;
 using WorldOfPowerTools.Domain.Enums;
+using WorldOfPowerTools.Domain.Models.Entities;
 
 namespace WorldOfPowerTools.Domain.Repositories
 {

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WorldOfPowerTools.Domain.Entities;
+using WorldOfPowerTools.Domain.Models.Entities;
 
 namespace WorldOfPowerTools.DAL.Context.Configurations
 {

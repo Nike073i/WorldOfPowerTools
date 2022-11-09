@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WorldOfPowerTools.Domain.Entities;
-using WorldOfPowerTools.Domain.ObjectValues;
+using WorldOfPowerTools.Domain.Models.Entities;
+using WorldOfPowerTools.Domain.Models.ObjectValues;
 
 namespace WorldOfPowerTools.DAL.Context.Configurations
 {

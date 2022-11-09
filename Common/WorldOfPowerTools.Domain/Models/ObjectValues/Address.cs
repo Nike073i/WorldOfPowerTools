@@ -1,4 +1,4 @@
-namespace WorldOfPowerTools.Domain.ObjectValues
+namespace WorldOfPowerTools.Domain.Models.ObjectValues
 {
     public class Address
     {
@@ -14,7 +14,7 @@ namespace WorldOfPowerTools.Domain.ObjectValues
 
         public Address(string country, string city, string street, string house, int flat, string postalCode)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
     }
 }

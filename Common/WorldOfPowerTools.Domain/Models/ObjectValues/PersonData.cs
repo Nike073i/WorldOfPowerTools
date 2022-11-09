@@ -1,4 +1,4 @@
-namespace WorldOfPowerTools.Domain.ObjectValues
+namespace WorldOfPowerTools.Domain.Models.ObjectValues
 {
     public class PersonData
     {
@@ -11,7 +11,7 @@ namespace WorldOfPowerTools.Domain.ObjectValues
 
         public PersonData(string firstName, string secondName, DateTime birthday)
         {
-            throw new System.Exception("Not implemented");
+            throw new Exception("Not implemented");
         }
     }
 }

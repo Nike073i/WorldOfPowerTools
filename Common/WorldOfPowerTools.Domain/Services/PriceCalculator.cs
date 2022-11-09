@@ -1,4 +1,4 @@
-using WorldOfPowerTools.Domain.ObjectValues;
+using WorldOfPowerTools.Domain.Models.ObjectValues;
 using WorldOfPowerTools.Domain.Repositories;
 
 namespace WorldOfPowerTools.Domain.Services

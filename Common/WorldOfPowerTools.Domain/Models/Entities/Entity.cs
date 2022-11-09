@@ -1,4 +1,4 @@
-namespace WorldOfPowerTools.Domain.Entities
+namespace WorldOfPowerTools.Domain.Models.Entities
 {
     public abstract class Entity<TId>
     {
