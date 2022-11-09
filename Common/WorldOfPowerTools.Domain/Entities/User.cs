@@ -8,9 +8,9 @@ namespace WorldOfPowerTools.Domain.Entities
         private Cart _cart;
         public string Login { get; protected set; }
         public string PasswordHash { get; protected set; }
-        public PersonData? PersonData { get; protected set; }
-        public ContactData? ContactData { get; protected set; }
-        public Address? Address { get; protected set; }
+        public PersonData? PersonData { get; set; }
+        public ContactData? ContactData { get; set; }
+        public Address? Address { get; set; }
         public Actions Rights { get; protected set; }
 
 #nullable disable
@@ -36,7 +36,7 @@ namespace WorldOfPowerTools.Domain.Entities
         {
             throw new System.Exception("Not implemented");
         }
-        public User RemoveProductFromCart(Guid productId, int? count)
+        public User RemoveProductFromCart(Guid productId, int? count = null)
         {
             throw new System.Exception("Not implemented");
         }

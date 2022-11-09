@@ -18,7 +18,7 @@ namespace WorldOfPowerTools.Domain.Entities
         {
             throw new System.Exception("Not implemented");
         }
-        public Cart RemoveProduct(Guid productId, int? count)
+        public Cart RemoveProduct(Guid productId, int? count = null)
         {
             throw new System.Exception("Not implemented");
         }

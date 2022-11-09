@@ -4,10 +4,10 @@ namespace WorldOfPowerTools.Domain.Entities
 {
     public class Product : Entity
     {
-        public string Name { get; protected set; }
-        public double Price { get; protected set; }
-        public Category Category { get; protected set; }
-        public string Description { get; protected set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public Category Category { get; set; }
+        public string Description { get; set; }
         public int Quantity { get; protected set; }
         public bool Availablity { get; protected set; }
 

@@ -5,7 +5,7 @@ namespace WorldOfPowerTools.Domain.Entities
 {
     public class Order : Entity
     {
-        private Dictionary<Guid, CartLine> _products;
+        private IEnumerable<CartLine> _orderItems;
         public Guid UserId { get; protected set; }
         public double Price { get; protected set; }
         public Address Address { get; protected set; }
@@ -16,11 +16,11 @@ namespace WorldOfPowerTools.Domain.Entities
 #nullable disable
         protected Order() { }
 
-        public Order(Guid userId, double price, Address address, ContactData contactData)
+        public Order(Guid userId, double price, Address address, ContactData contactData, IEnumerable<CartLine> cartLines)
         {
             throw new System.Exception("Not implemented");
         }
-        public IEnumerable<CartLine> GetProducts()
+        public IEnumerable<CartLine> GetOrderItems()
         {
             throw new System.Exception("Not implemented");
         }
