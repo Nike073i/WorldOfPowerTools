@@ -22,7 +22,7 @@ namespace WorldOfPowerTools.Domain.Test.Models.ObjectValues
             Assert.AreEqual(expAddress, address);
         }
 
-        public Address CreateAddress()
+        private Address CreateAddress()
         {
             string country = "Тестовая страна";
             string city = "Тестовый город";
@@ -47,6 +47,6 @@ namespace WorldOfPowerTools.Domain.Test.Models.ObjectValues
             new object?[] { "Тестовая страна", "Тестовый город", "Тестовая улица", "30б", 10000, "443444", typeof(ArgumentOutOfRangeException) },
             new object?[] { "Тестовая страна", "Тестовый город", "Тестовая улица", "30б", 100, "", typeof(ArgumentNullException) },
             new object?[] { "Тестовая страна", "Тестовый город", "Тестовая улица", "30б", 100, null, typeof(ArgumentNullException) },
-    };
+        };
     }
 }

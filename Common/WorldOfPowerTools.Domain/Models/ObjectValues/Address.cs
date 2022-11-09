@@ -52,7 +52,7 @@ namespace WorldOfPowerTools.Domain.Models.ObjectValues
 
         public override string ToString()
         {
-            return $"{Country}, г.{City}, ул.{Street}, д.{House}, кв.{Flat}, индекс {PostalCode}";
+            return $"{Country}, Рі.{City}, СѓР».{Street}, Рґ.{House}, РєРІ.{Flat}, РёРЅРґРµРєСЃ {PostalCode}";
         }
     }
 }
