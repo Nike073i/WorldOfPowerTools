@@ -10,7 +10,33 @@ namespace WorldOfPowerTools.Domain.Models.ObjectValues
 
         public CartLine(Guid productId, int quantity)
         {
-            throw new Exception("Not implemented");
+            if (productId == Guid.Empty) throw new ArgumentNullException(nameof(productId));
+            if (quantity < 1 || quantity > 999) throw new ArgumentOutOfRangeException(nameof(quantity));
+
+            ProductId = productId;
+            Quantity = quantity;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return (obj is CartLine other) && Equals(other);
+        }
+
+        public bool Equals(CartLine other)
+        {
+            if (other == null) return false;
+            return ProductId == other.ProductId &&
+                Quantity == other.Quantity;
+        }
+
+        public override int GetHashCode()
+        {
+            return ProductId.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"{ProductId} - {Quantity}";
         }
     }
 }
