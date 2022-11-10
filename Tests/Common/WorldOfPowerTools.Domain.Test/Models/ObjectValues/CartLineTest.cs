@@ -26,7 +26,6 @@ namespace WorldOfPowerTools.Domain.Test.Models.ObjectValues
 
         static object[] IncorrectConstructCases =
         {
-            new object?[] { null, 5, typeof(ArgumentNullException) },
             new object?[] { Guid.Empty, 5, typeof(ArgumentNullException) },
             new object?[] { new Guid("e9e43c3f-cb55-4877-854f-b92263948506"), -1, typeof(ArgumentOutOfRangeException) },
             new object?[] { new Guid("862fa2b0-5b56-4954-9602-3a8cea85a2c3"), 0, typeof(ArgumentOutOfRangeException) },
