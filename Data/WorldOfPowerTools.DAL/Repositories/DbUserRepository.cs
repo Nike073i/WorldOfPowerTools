@@ -5,27 +5,27 @@ namespace WorldOfPowerTools.DAL.Repositories
 {
     public class DbUserRepository : IUserRepository
     {
-        public IEnumerable<User> GetAllAsync(int? skip, int? take)
+        public Task<IEnumerable<User>> GetAllAsync(int? skip, int? take)
         {
             throw new NotImplementedException();
         }
 
-        public User GetByIdAsync(Guid id)
+        public Task<User> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public User GetByLoginAsync(string login)
+        public Task<User> GetByLoginAsync(string login)
         {
             throw new NotImplementedException();
         }
 
-        public Guid RemoveByIdAsync(Guid id)
+        public Task<Guid> RemoveByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public User SaveAsync(User entity)
+        public Task<User> SaveAsync(User entity)
         {
             throw new NotImplementedException();
         }

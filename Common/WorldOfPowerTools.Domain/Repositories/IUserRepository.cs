@@ -4,6 +4,6 @@ namespace WorldOfPowerTools.Domain.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        public User? GetByLoginAsync(string login);
+        public Task<User?> GetByLoginAsync(string login);
     }
 }

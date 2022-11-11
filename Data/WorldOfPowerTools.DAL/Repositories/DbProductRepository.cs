@@ -6,27 +6,27 @@ namespace WorldOfPowerTools.DAL.Repositories
 {
     public class DbProductRepository : IProductRepository
     {
-        public IEnumerable<Product> GetAllAsync(int? skip, int? take)
+        public Task<IEnumerable<Product>> GetAllAsync(int? skip, int? take)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Product> GetByCategoryAsync(Category category, int? skip, int? take)
+        public Task<IEnumerable<Product>> GetByCategoryAsync(Category category, int? skip, int? take)
         {
             throw new NotImplementedException();
         }
 
-        public Product GetByIdAsync(Guid id)
+        public Task<Product> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Guid RemoveByIdAsync(Guid id)
+        public Task<Guid> RemoveByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Product SaveAsync(Product entity)
+        public Task<Product> SaveAsync(Product entity)
         {
             throw new NotImplementedException();
         }
