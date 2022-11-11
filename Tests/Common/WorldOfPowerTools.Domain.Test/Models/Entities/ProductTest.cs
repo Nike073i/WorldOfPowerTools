@@ -145,7 +145,7 @@ namespace WorldOfPowerTools.Domain.Test.Models.Entities
         [Test]
         public void AvailabilityChangeAfterProductEnded()
         {
-            var expProduct = CreateProduct(quantity: Product.MinQuantity, isAvailable : false);
+            var expProduct = CreateProduct(quantity: Product.MinQuantity, isAvailable: false);
             var product = CreateProduct(quantity: 100);
             product.RemoveFromStore(100);
             Assert.True(IsEqualProducts(expProduct, product));
@@ -160,7 +160,7 @@ namespace WorldOfPowerTools.Domain.Test.Models.Entities
             Assert.True(IsEqualProducts(expProduct, product));
         }
 
-        private Product CreateProduct(string name = "Тестовый товар", string description = "Тестовое описание",
+        public static Product CreateProduct(string name = "Тестовый товар", string description = "Тестовое описание",
             double price = 150d, Category category = Category.Painting, int quantity = 100, bool isAvailable = true)
         {
             return new Product(name, price, category, description, quantity, isAvailable);

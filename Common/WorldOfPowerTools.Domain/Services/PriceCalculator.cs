@@ -9,11 +9,21 @@ namespace WorldOfPowerTools.Domain.Services
 
         public PriceCalculator(IProductRepository productRepository)
         {
-            throw new System.Exception("Not implemented");
+            if (productRepository == null) throw new ArgumentNullException(nameof(productRepository));
+            _productRepository = productRepository;
         }
-        public double CalculatePrice(IEnumerable<CartLine> cartLines)
+
+        public async Task<double> CalculatePriceAsync(IEnumerable<CartLine> cartLines)
         {
-            throw new System.Exception("Not implemented");
+            if (cartLines == null || !cartLines.Any()) throw new ArgumentNullException(nameof(cartLines));
+            double totalPrice = 0d;
+            foreach (var cartLine in cartLines)
+            {
+                var product = await _productRepository.GetByIdAsync(cartLine.ProductId);
+                if (product != null)
+                    totalPrice += product.Price;
+            }
+            return totalPrice;
         }
     }
 }
