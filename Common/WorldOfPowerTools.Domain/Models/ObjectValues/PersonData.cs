@@ -3,7 +3,7 @@ namespace WorldOfPowerTools.Domain.Models.ObjectValues
     public class PersonData
     {
         public static readonly DateTime BirthdayMinDate = new(1900, 01, 01);
-        public static readonly DateTime BirthdayMaxDate = DateTime.Now;
+        public static readonly DateTime BirthdayMaxDate = DateTime.Today;
 
         public string FirstName { get; protected set; }
         public string SecondName { get; protected set; }
