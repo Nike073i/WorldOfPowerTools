@@ -8,8 +8,8 @@ namespace WorldOfPowerTools.Domain.Models.Entities
         public static readonly int MinNameLength = 5;
         public static readonly int MaxNameLength = 100;
         public static readonly int MaxDescriptionLength = 2000;
-        public static readonly int MinPrice = 0;
-        public static readonly int MaxPrice = 999_999_999;
+        public static readonly double MinPrice = 1d;
+        public static readonly double MaxPrice = 999_999_999d;
         public static readonly int MinQuantity = 0;
         public static readonly int MaxQuantity = 9999;
 

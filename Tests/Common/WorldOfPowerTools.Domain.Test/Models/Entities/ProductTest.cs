@@ -19,8 +19,8 @@ namespace WorldOfPowerTools.Domain.Test.Models.Entities
         public void CreateProductCorrect()
         {
             var expProduct = CreateProduct();
-            var personData = CreateProduct();
-            Assert.True(IsEqualProducts(expProduct, personData));
+            var product = CreateProduct();
+            Assert.True(IsEqualProducts(expProduct, product));
         }
 
         [Test]

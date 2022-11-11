@@ -6,6 +6,10 @@ namespace WorldOfPowerTools.Domain.Test.Models.ObjectValues
 {
     public class PersonDataTest
     {
+        private static string testFirstName = "Тестовое имя";
+        private static string testSecondName = "Тестовая фамилия";
+        private static DateTime testBirthday = new DateTime(2001, 09, 12);
+
         [Test]
         [TestCaseSource(nameof(IncorrectConstructCases))]
         public void CreatePersonDataIncorrect(string firstName, string secondName, DateTime birthday, Type awaitingException)
@@ -17,27 +21,27 @@ namespace WorldOfPowerTools.Domain.Test.Models.ObjectValues
         [Test]
         public void CreatePersonDataCorrect()
         {
-            var expPersonData = new PersonData("Тестовое имя", "Тестовая фамилия", new DateTime(2001, 09, 12));
+            var expPersonData = new PersonData(testFirstName, testSecondName, testBirthday);
             var personData = CreatePersonData();
             Assert.AreEqual(expPersonData, personData);
         }
 
         private PersonData CreatePersonData()
         {
-            string firstName = "Тестовое имя";
-            string secondName = "Тестовая фамилия";
-            var birthday = new DateTime(2001, 09, 12);
+            string firstName = testFirstName;
+            string secondName = testSecondName;
+            var birthday = testBirthday;
             return new PersonData(firstName, secondName, birthday);
         }
 
         static object[] IncorrectConstructCases =
         {
-            new object?[] { "", "Тестовая фамилия", new DateTime(2001, 09, 12), typeof(ArgumentNullException) },
-            new object?[] { null, "Тестовая фамилия", new DateTime(2001, 09, 12), typeof(ArgumentNullException) },
-            new object?[] { "Тестовое имя", "", new DateTime(2001, 09, 12), typeof(ArgumentNullException) },
-            new object?[] { "Тестовое имя", null, new DateTime(2001, 09, 12), typeof(ArgumentNullException) },
-            new object?[] { "Тестовое имя", "Тестовая фамилия", PersonData.BirthdayMinDate.AddDays(-1), typeof(ArgumentException) },
-            new object?[] { "Тестовое имя", "Тестовая фамилия", PersonData.BirthdayMaxDate.AddDays(1), typeof(ArgumentException) },
+            new object?[] { "", testSecondName, testBirthday, typeof(ArgumentNullException) },
+            new object?[] { null, testSecondName, testBirthday, typeof(ArgumentNullException) },
+            new object?[] { testFirstName, "", testBirthday, typeof(ArgumentNullException) },
+            new object?[] { testFirstName, null, testBirthday, typeof(ArgumentNullException) },
+            new object?[] { testFirstName, testSecondName, PersonData.BirthdayMinDate.AddDays(-1), typeof(ArgumentException) },
+            new object?[] { testFirstName, testSecondName, PersonData.BirthdayMaxDate.AddDays(1), typeof(ArgumentException) },
         };
     }
 }
