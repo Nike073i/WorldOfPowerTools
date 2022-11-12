@@ -43,12 +43,12 @@ namespace WorldOfPowerTools.Domain.Test.Models.Entities
             Assert.True(IsEqualUsers(expUser, user));
         }
 
-        private User CreateUser(string login = "Тестовый логин", string passwordHash = "9363fc3c6345251ffe019a3365447febab2b649de3643205eeec1053126ad749", Actions actions = Actions.None)
+        public static User CreateUser(string login = "Тестовый логин", string passwordHash = "9363fc3c6345251ffe019a3365447febab2b649de3643205eeec1053126ad749", Actions actions = Actions.None)
         {
             return new User(login, passwordHash, actions);
         }
 
-        private bool IsEqualUsers(User a, User b)
+        public static bool IsEqualUsers(User a, User b)
         {
             return a.Login == b.Login &&
                 a.PasswordHash == b.PasswordHash &&

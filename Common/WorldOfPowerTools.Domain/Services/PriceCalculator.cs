@@ -5,7 +5,7 @@ namespace WorldOfPowerTools.Domain.Services
 {
     public class PriceCalculator
     {
-        private IProductRepository _productRepository;
+        private readonly IProductRepository _productRepository;
 
         public PriceCalculator(IProductRepository productRepository)
         {
