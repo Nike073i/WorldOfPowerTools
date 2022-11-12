@@ -30,5 +30,10 @@ namespace WorldOfPowerTools.DAL.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task<IEnumerable<Product>> SaveRangeAsync(IEnumerable<Product> products)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
