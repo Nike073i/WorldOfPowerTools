@@ -6,7 +6,7 @@ namespace WorldOfPowerTools.Domain.Extensions
     {
         public static bool IsSet(this Actions actions, Actions actionToTest)
         {
-            if (actionToTest == Actions.None) throw new ArgumentOutOfRangeException(nameof(actionToTest), "Значение не может быть 0");
+            if (actionToTest == Actions.None) return true;
             return (actions & actionToTest) == actionToTest;
         }
 

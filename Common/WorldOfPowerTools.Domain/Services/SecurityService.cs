@@ -1,4 +1,5 @@
 using WorldOfPowerTools.Domain.Enums;
+using WorldOfPowerTools.Domain.Extensions;
 using WorldOfPowerTools.Domain.Repositories;
 
 namespace WorldOfPowerTools.Domain.Services
@@ -6,13 +7,18 @@ namespace WorldOfPowerTools.Domain.Services
     public class SecurityService
     {
         private readonly IUserRepository _userRepository;
+
         public SecurityService(IUserRepository userRepository)
         {
-            throw new System.Exception("Not implemented");
+            if (userRepository == null) throw new ArgumentNullException(nameof(userRepository));
+            _userRepository = userRepository;
         }
-        public bool UserOperationAvailability(Guid userId, Actions access)
+
+        public async Task<bool> UserOperationAvailability(Guid userId, Actions action)
         {
-            throw new System.Exception("Not implemented");
+            if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId));
+            var user = await _userRepository.GetByIdAsync(userId);
+            return user != null && user.Rights.IsSet(action);
         }
     }
 }
