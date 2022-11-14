@@ -6,7 +6,7 @@ namespace WorldOfPowerTools.Domain.Repositories
     {
         public Task<TEntity> SaveAsync(TEntity entity);
         public Task<TId> RemoveByIdAsync(TId id);
-        public Task<IEnumerable<TEntity>> GetAllAsync(int? skip, int? take);
+        public Task<IEnumerable<TEntity>> GetAllAsync(int skip = 0, int? take = null);
         public Task<TEntity?> GetByIdAsync(TId id);
     }
 

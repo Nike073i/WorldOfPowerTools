@@ -1,31 +1,14 @@
+using WorldOfPowerTools.DAL.Context;
 using WorldOfPowerTools.Domain.Models.Entities;
 using WorldOfPowerTools.Domain.Repositories;
 
 namespace WorldOfPowerTools.DAL.Repositories
 {
-    public class DbUserRepository : IUserRepository
+    public class DbUserRepository : DbRepository<User>, IUserRepository
     {
-        public Task<IEnumerable<User>> GetAllAsync(int? skip, int? take)
-        {
-            throw new NotImplementedException();
-        }
+        public DbUserRepository(WorldOfPowerToolsDb context) : base(context) { }
 
-        public Task<User> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<User> GetByLoginAsync(string login)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Guid> RemoveByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<User> SaveAsync(User entity)
+        public Task<User?> GetByLoginAsync(string login)
         {
             throw new NotImplementedException();
         }

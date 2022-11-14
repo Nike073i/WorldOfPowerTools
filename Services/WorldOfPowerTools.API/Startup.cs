@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using WorldOfPowerTools.DAL.Context;
+using WorldOfPowerTools.DAL.Repositories;
+using WorldOfPowerTools.Domain.Repositories;
 
 namespace WorldOfPowerTools.API
 {
@@ -17,7 +16,11 @@ namespace WorldOfPowerTools.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            var dbConnection = Configuration.GetSection("Database").GetConnectionString("MSSQL");
+            services.AddDbContext<WorldOfPowerToolsDb>(options => options.UseSqlServer(dbConnection));
+            services.AddControllers();
+            services.AddSwaggerGen();
+            services.AddTransient<IProductRepository, DbProductRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -25,21 +28,19 @@ namespace WorldOfPowerTools.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseStatusCodePages();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseMvc(routes =>
+
+            app.UseRouting();
+
+            //app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action}/{id?}"
-                );
+                endpoints.MapControllers();
             });
         }
     }

@@ -1,14 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 
 namespace WorldOfPowerTools.TestConsole
 {
     public class Program
     {
-        public static void Main(string[] args)
+        private static IHost _host { get; set; }
+        public static async Task Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-            host.Run();
+            _host = CreateHostBuilder(args).Build();
+            await _host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args)
@@ -19,6 +19,5 @@ namespace WorldOfPowerTools.TestConsole
                     startup.ConfigureServices(services);
                 });
         }
-
     }
 }
