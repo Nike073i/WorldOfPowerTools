@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WorldOfPowerTools.DAL.Context;
 using WorldOfPowerTools.Domain.Models.Entities;
 using WorldOfPowerTools.Domain.Repositories;
@@ -8,9 +9,9 @@ namespace WorldOfPowerTools.DAL.Repositories
     {
         public DbUserRepository(WorldOfPowerToolsDb context) : base(context) { }
 
-        public Task<User?> GetByLoginAsync(string login)
+        public async Task<User?> GetByLoginAsync(string login)
         {
-            throw new NotImplementedException();
+            return await Items.FirstOrDefaultAsync(user => user.Login == login);
         }
     }
 }

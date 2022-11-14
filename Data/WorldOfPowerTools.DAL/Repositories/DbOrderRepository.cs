@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WorldOfPowerTools.DAL.Context;
 using WorldOfPowerTools.Domain.Enums;
 using WorldOfPowerTools.Domain.Models.Entities;
@@ -9,14 +10,19 @@ namespace WorldOfPowerTools.DAL.Repositories
     {
         public DbOrderRepository(WorldOfPowerToolsDb context) : base(context) { }
 
-        public Task<IEnumerable<Order>> GetByStatusAsync(OrderStatus status, int? skip, int? take)
+        public async Task<IEnumerable<Order>> GetByStatusAsync(OrderStatus status, int skip = 0, int? take = null)
         {
-            throw new NotImplementedException();
+            var itemsByStatus = Items.Where(product => product.Status == status);
+            int skipCount = skip < 0 ? 0 : skip;
+            var items = itemsByStatus.Skip(skipCount);
+            if (take.HasValue && take.Value > 0)
+                items = items.Take(take.Value);
+            return await items.ToListAsync();
         }
 
-        public Task<Order?> GetByUserIdAsync(Guid id)
+        public async Task<IEnumerable<Order>> GetByUserIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await Items.Where(order => order.UserId == id).ToListAsync();
         }
     }
 }

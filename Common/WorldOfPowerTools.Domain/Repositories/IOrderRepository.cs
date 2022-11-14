@@ -5,7 +5,7 @@ namespace WorldOfPowerTools.Domain.Repositories
 {
     public interface IOrderRepository : IRepository<Order>
     {
-        public Task<Order?> GetByUserIdAsync(Guid id);
-        public Task<IEnumerable<Order>> GetByStatusAsync(OrderStatus status, int? skip, int? take);
+        public Task<IEnumerable<Order>> GetByUserIdAsync(Guid id);
+        public Task<IEnumerable<Order>> GetByStatusAsync(OrderStatus status, int skip = 0, int? take = null);
     }
 }
