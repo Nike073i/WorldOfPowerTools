@@ -13,14 +13,6 @@ namespace WorldOfPowerTools.Domain.Test.Services
     public class PriceCalculatorTest
     {
         [Test]
-        [TestCase(null, typeof(ArgumentNullException))]
-        public void CreateServiceIncorrect(IProductRepository productRepository, Type awaitingException)
-        {
-            TestDelegate construct = () => new PriceCalculator(productRepository);
-            Assert.Throws(awaitingException, construct);
-        }
-
-        [Test]
         [TestCaseSource(nameof(CalculatePriceIncorrectCases))]
         public void CalculatePriceIncorrect(IEnumerable<CartLine> cartLines, Type awaitingException)
         {

@@ -16,7 +16,6 @@ namespace WorldOfPowerTools.Domain.Services
 
         public IdentityService(IUserRepository userRepository)
         {
-            if (userRepository == null) throw new ArgumentNullException(nameof(userRepository));
             _userRepository = userRepository;
         }
 

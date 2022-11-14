@@ -10,7 +10,6 @@ namespace WorldOfPowerTools.Domain.Services
 
         public SecurityService(IUserRepository userRepository)
         {
-            if (userRepository == null) throw new ArgumentNullException(nameof(userRepository));
             _userRepository = userRepository;
         }
 

@@ -12,14 +12,6 @@ namespace WorldOfPowerTools.Domain.Test.Services
     public class SecurityServiceTests
     {
         [Test]
-        [TestCase(null, typeof(ArgumentNullException))]
-        public void CreateServiceIncorrect(IUserRepository userRepository, Type awaitingException)
-        {
-            TestDelegate construct = () => new SecurityService(userRepository);
-            Assert.Throws(awaitingException, construct);
-        }
-
-        [Test]
         public void UserOperationAvailabilityNullUserId()
         {
             var userRepository = new Mock<IUserRepository>().Object;

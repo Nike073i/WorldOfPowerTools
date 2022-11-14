@@ -153,8 +153,6 @@ namespace WorldOfPowerTools.Domain.Test.Models.Entities
             new object?[] { Guid.Empty, testPrice, testAddress, testContactData, testCartLines, typeof(ArgumentNullException)},
             new object?[] { testUserId, Order.MinPrice - 1, testAddress, testContactData, testCartLines, typeof(ArgumentOutOfRangeException)},
             new object?[] { testUserId, Order.MaxPrice + 1, testAddress, testContactData, testCartLines, typeof(ArgumentOutOfRangeException)},
-            new object?[] { testUserId, testPrice, null, testContactData, testCartLines, typeof(ArgumentNullException)},
-            new object?[] { testUserId, testPrice, testAddress, null, testCartLines, typeof(ArgumentNullException)},
             new object?[] { testUserId, testPrice, testAddress, testContactData, null, typeof(ArgumentNullException)},
             new object?[] { testUserId, testPrice, testAddress, testContactData, new List<CartLine>(), typeof(ArgumentNullException)}
         };

@@ -36,15 +36,6 @@ namespace WorldOfPowerTools.Domain.Test.Services
         };
 
         [Test]
-        [TestCaseSource(nameof(CreateServiceIncorrectCases))]
-        public void CreateServiceIncorrect(PriceCalculator priceCalculator, IOrderRepository orderRepository,
-            IProductRepository productRepository, IUserRepository userRepository, Type awaitingException)
-        {
-            TestDelegate construct = () => new SaleService(priceCalculator, orderRepository, productRepository, userRepository);
-            Assert.Throws(awaitingException, construct);
-        }
-
-        [Test]
         [TestCaseSource(nameof(CreateOrderIncorrectCases))]
         public void CreateNewOrderIncorrect(Guid userId, IEnumerable<CartLine> cartLines, Address address, ContactData contactData, Type awaitingException)
         {
@@ -58,46 +49,7 @@ namespace WorldOfPowerTools.Domain.Test.Services
             var saleService = GetSaleService();
             var userId = Guid.NewGuid();
             AsyncTestDelegate badCreate = async () => await saleService.CreateOrder(userId, testCartLines, testAddress, testContactData);
-            Assert.ThrowsAsync<UserNotFoundException>(badCreate);
-        }
-
-        [Test]
-        public void CreateOrderWhenLittleQuantityProducts()
-        {
-            var saleService = GetSaleService();
-            var cartLines = new List<CartLine>
-            {
-                new CartLine(product1Id, product1.Quantity + 1)
-            };
-            AsyncTestDelegate badCreate = async () => await saleService.CreateOrder(testUserId, cartLines, testAddress, testContactData);
-            Assert.ThrowsAsync<InvalidOperationException>(badCreate);
-        }
-
-        [Test]
-        public async Task CreateOrderCorrectValues()
-        {
-            var productRepository = new Mock<IProductRepository>();
-            var product1Id = Guid.NewGuid();
-            var product1Quantity = 10;
-            var product1 = new Product("prod1", 100d, Category.Screwdriver, "description1", product1Quantity);
-            var product2Id = Guid.NewGuid();
-            var product2Quantity = 20;
-            var product2 = new Product("prod2", 200d, Category.Various, "description2", product2Quantity);
-            productRepository.Setup(x => x.GetByIdAsync(product1Id)).ReturnsAsync(product1);
-            productRepository.Setup(x => x.GetByIdAsync(product2Id)).ReturnsAsync(product2);
-            productRepository.Setup(x => x.SaveAsync(It.Is<Product>(p => p.Id == product1Id))).Callback<Product>(np => product1 = np).ReturnsAsync(product1);
-            productRepository.Setup(x => x.SaveAsync(It.Is<Product>(p => p.Id == product2Id))).Callback<Product>(np => product2 = np).ReturnsAsync(product2);
-            var priceCalculator = new Mock<PriceCalculator>(productRepository.Object);
-
-            var saleService = GetSaleService(productRepository: productRepository.Object, priceCalculator: priceCalculator.Object);
-            var cartLines = new List<CartLine>
-            {
-                new CartLine(product1Id, 6),
-                new CartLine(product2Id, 13),
-            };
-            await saleService.CreateOrder(testUserId, cartLines, testAddress, testContactData);
-            Assert.AreEqual(product1.Quantity, product1Quantity - cartLines[0].Quantity);
-            Assert.AreEqual(product2.Quantity, product2Quantity - cartLines[1].Quantity);
+            Assert.ThrowsAsync<EntityNotFoundException>(badCreate);
         }
 
         [Test]
@@ -163,21 +115,10 @@ namespace WorldOfPowerTools.Domain.Test.Services
             return new SaleService(priceCalculator, orderRepository, productRepository, userRepository);
         }
 
-        static object[] CreateServiceIncorrectCases =
-        {
-            new object?[] { null, GetOrderRepository(), GetProductRepository(), GetUserRepository(), typeof(ArgumentNullException)},
-            new object?[] { GetPriceCalculator(), null, GetProductRepository(), GetUserRepository(), typeof(ArgumentNullException)},
-            new object?[] { GetPriceCalculator(), GetOrderRepository(), null, GetUserRepository(), typeof(ArgumentNullException)},
-            new object?[] { GetPriceCalculator(), GetOrderRepository(), GetProductRepository(), null,  typeof(ArgumentNullException)},
-        };
-
         static object[] CreateOrderIncorrectCases =
 {
             new object?[] { Guid.Empty, testCartLines, testAddress, testContactData, typeof(ArgumentNullException)},
-            new object?[] { testUserId, null, testAddress, testContactData, typeof(ArgumentNullException)},
             new object?[] { testUserId, new List<CartLine>(), testAddress, testContactData, typeof(ArgumentNullException)},
-            new object?[] { testUserId, testCartLines, null, testContactData, typeof(ArgumentNullException)},
-            new object?[] { testUserId, testCartLines, testAddress, null, typeof(ArgumentNullException)},
         };
     }
 }

@@ -23,10 +23,7 @@ namespace WorldOfPowerTools.Domain.Models.Entities
         {
             if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId));
             if (price < MinPrice || price > MaxPrice) throw new ArgumentOutOfRangeException(nameof(price));
-            if (address == null) throw new ArgumentNullException(nameof(address));
-            if (contactData == null) throw new ArgumentNullException(nameof(contactData));
-            if (contactData == null) throw new ArgumentNullException(nameof(contactData));
-            if (cartLines == null || !cartLines.Any()) throw new ArgumentNullException(nameof(cartLines));
+            if (!cartLines.Any()) throw new ArgumentNullException(nameof(cartLines));
 
             UserId = userId;
             Price = price;

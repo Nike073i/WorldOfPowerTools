@@ -9,7 +9,6 @@ namespace WorldOfPowerTools.Domain.Services
 
         public PriceCalculator(IProductRepository productRepository)
         {
-            if (productRepository == null) throw new ArgumentNullException(nameof(productRepository));
             _productRepository = productRepository;
         }
 

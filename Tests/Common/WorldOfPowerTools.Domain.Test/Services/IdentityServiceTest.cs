@@ -30,14 +30,6 @@ namespace WorldOfPowerTools.Domain.Test.Services
 
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
-        public void CreateServiceIncorrect(IUserRepository userRepository, Type awaitingException)
-        {
-            TestDelegate construct = () => new IdentityService(userRepository);
-            Assert.Throws(awaitingException, construct);
-        }
-
-        [Test]
-        [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentNullException))]
         public void PasswordHashIncorrect(string password, Type awaitingException)
         {
@@ -97,7 +89,7 @@ namespace WorldOfPowerTools.Domain.Test.Services
             return userRepository.Object;
         }
 
-        static object[] UserDataIncorrectCases =
+        static readonly object[] UserDataIncorrectCases =
         {
             new object?[] { "", testUserPassword,typeof(ArgumentNullException) },
             new object?[] { null, testUserPassword,typeof(ArgumentNullException) },
@@ -105,13 +97,13 @@ namespace WorldOfPowerTools.Domain.Test.Services
             new object?[] { testUserLogin, null, typeof(ArgumentNullException) }
         };
 
-        static object[] RegistrationIncorrectCases =
+        static readonly object[] RegistrationIncorrectCases =
 {
             new object?[] { user1.Login, user1password,typeof(UserExistsException) },
             new object?[] { user2.Login, user2password,typeof(UserExistsException) },
         };
 
-        static object[] AuthorizationCorrectCases =
+        static readonly object[] AuthorizationCorrectCases =
         {
             new object?[] { "userLoginNotFound", user1password, null },
             new object?[] { user1.Login, user1password, user1 },
