@@ -5,7 +5,7 @@ using System.Linq;
 using WorldOfPowerTools.Domain.Models.Entities;
 using WorldOfPowerTools.Domain.Models.ObjectValues;
 
-namespace WorldOfPowerTools.Domain.Test.Models.Entities
+namespace WorldOfPowerTools.Domain.Test.Services
 {
     public class CartTest
     {

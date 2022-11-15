@@ -2,34 +2,37 @@
 using System;
 using WorldOfPowerTools.Domain.Models.ObjectValues;
 
-namespace WorldOfPowerTools.Domain.Test.Models.ObjectValues
+namespace WorldOfPowerTools.Domain.Test.Models.Entities
 {
     public class CartLineTest
     {
-        //[Test]
-        //[TestCaseSource(nameof(IncorrectConstructCases))]
-        //public void CreateCartLineIncorrect(Guid productId, int quantity, Type awaitingException)
-        //{
-        //    TestDelegate construct = () => new CartLine(productId, quantity);
-        //    Assert.Throws(awaitingException, construct);
-        //}
+        private static readonly Guid testUserId = new Guid("e9e43c3f-cb55-4877-854f-b92263948506");
+        private static readonly Guid testProductId = new Guid("e9e43c3f-cb55-4877-854f-b92263948506");
+        private static readonly int testQuantity = 150;
 
-        //[Test]
-        //public void CreateCartLineCorrect()
-        //{
-        //    var productGuid = Guid.NewGuid();
-        //    var quantity = 100;
-        //    var expCartLine = new CartLine(productGuid, quantity);
-        //    var cartLine = new CartLine(productGuid, quantity);
-        //    Assert.AreEqual(expCartLine, cartLine);
-        //}
+        [Test]
+        [TestCaseSource(nameof(CreateCartLineWithBadArgsCases))]
+        public void CreateCartLineWithBadArgs(Guid userId, Guid productId, int quantity, Type awaitingException)
+        {
+            TestDelegate construct = () => new CartLine(userId, productId, quantity);
+            Assert.Throws(awaitingException, construct);
+        }
 
-        //static object[] IncorrectConstructCases =
-        //{
-        //    new object?[] { Guid.Empty, 5, typeof(ArgumentNullException) },
-        //    new object?[] { new Guid("e9e43c3f-cb55-4877-854f-b92263948506"), -1, typeof(ArgumentOutOfRangeException) },
-        //    new object?[] { new Guid("862fa2b0-5b56-4954-9602-3a8cea85a2c3"), 0, typeof(ArgumentOutOfRangeException) },
-        //    new object?[] { new Guid("6e89f792-13e4-4487-8a66-3a860396526c"), 1000, typeof(ArgumentOutOfRangeException) }
-        //};
+        [Test]
+        public void CreateCartLineCorrect()
+        {
+            var cartLine = new CartLine(testUserId, testProductId, testQuantity);
+            Assert.AreEqual(cartLine.UserId, testUserId);
+            Assert.AreEqual(cartLine.ProductId, testProductId);
+            Assert.AreEqual(cartLine.Quantity, testQuantity);
+        }
+
+        static readonly object[] CreateCartLineWithBadArgsCases =
+        {
+            new object?[] { Guid.Empty, testProductId, testQuantity, typeof(ArgumentNullException) },
+            new object?[] { testUserId, Guid.Empty, testQuantity, typeof(ArgumentNullException) },
+            new object?[] { testUserId, testProductId, CartLine.MaxProductQuantity + 1, typeof(ArgumentOutOfRangeException) },
+            new object?[] { testUserId, testProductId, CartLine.MinProductQuantity - 1, typeof(ArgumentOutOfRangeException) },
+        };
     }
 }
