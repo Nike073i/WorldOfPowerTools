@@ -15,7 +15,7 @@ namespace WorldOfPowerTools.Domain.Models.Entities
         public async Task<IEnumerable<CartLine>> GetUserProducts(Guid userId)
         {
             if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId));
-            return await _cartLineRepository.GetByUserId(userId);
+            return await _cartLineRepository.GetByUserIdAsync(userId);
         }
 
         public async Task<Cart> AddProduct(Guid userId, Guid productId, int count)
@@ -28,7 +28,7 @@ namespace WorldOfPowerTools.Domain.Models.Entities
             if (count < minQuantity || count > maxQuantity) throw new ArgumentOutOfRangeException(nameof(count));
 
             int newQuantity = count;
-            var userCartLines = await _cartLineRepository.GetByUserId(userId);
+            var userCartLines = await _cartLineRepository.GetByUserIdAsync(userId);
             var productCartLine = userCartLines.FirstOrDefault(cl => cl.ProductId == productId);
             if (productCartLine != null)
             {
@@ -44,18 +44,18 @@ namespace WorldOfPowerTools.Domain.Models.Entities
         {
             if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId));
             if (productId == Guid.Empty) throw new ArgumentNullException(nameof(productId));
+            if (count.HasValue && count.Value < 1) throw new ArgumentOutOfRangeException(nameof(count));
 
-            var userCartLines = await _cartLineRepository.GetByUserId(userId);
+            var userCartLines = await _cartLineRepository.GetByUserIdAsync(userId);
             var productCartLine = userCartLines.FirstOrDefault(cl => cl.ProductId == productId);
             if (productCartLine == null) return this;
 
-            if (count == null)
+            if (!count.HasValue)
             {
                 await _cartLineRepository.RemoveByIdAsync(productCartLine.Id);
                 return this;
             }
 
-            if (count < 1) throw new ArgumentOutOfRangeException(nameof(count));
             int newQuantity = productCartLine.Quantity - count.Value;
             if (newQuantity <= 0)
             {
@@ -70,7 +70,7 @@ namespace WorldOfPowerTools.Domain.Models.Entities
         public async Task<int> Clear(Guid userId)
         {
             if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId));
-            return await _cartLineRepository.RemoveByUserId(userId);
+            return await _cartLineRepository.RemoveByUserIdAsync(userId);
         }
     }
 }

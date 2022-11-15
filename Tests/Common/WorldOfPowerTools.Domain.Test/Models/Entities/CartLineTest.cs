@@ -20,10 +20,10 @@ namespace WorldOfPowerTools.Domain.Test.Models.Entities
 
         static readonly object[] CreateCartLineWithBadArgsCases =
         {
-            new object?[] { Guid.Empty, testProductId, testQuantity, typeof(ArgumentNullException) },
-            new object?[] { testUserId, Guid.Empty, testQuantity, typeof(ArgumentNullException) },
-            new object?[] { testUserId, testProductId, CartLine.MaxProductQuantity + 1, typeof(ArgumentOutOfRangeException) },
-            new object?[] { testUserId, testProductId, CartLine.MinProductQuantity - 1, typeof(ArgumentOutOfRangeException) },
+            new object[] { Guid.Empty, testProductId, testQuantity, typeof(ArgumentNullException) },
+            new object[] { testUserId, Guid.Empty, testQuantity, typeof(ArgumentNullException) },
+            new object[] { testUserId, testProductId, CartLine.MaxProductQuantity + 1, typeof(ArgumentOutOfRangeException) },
+            new object[] { testUserId, testProductId, CartLine.MinProductQuantity - 1, typeof(ArgumentOutOfRangeException) },
         };
 
         [Test]
