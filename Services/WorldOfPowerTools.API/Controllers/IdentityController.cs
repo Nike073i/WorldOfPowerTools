@@ -5,16 +5,16 @@ namespace WorldOfPowerTools.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class IdentityController : ControllerBase
     {
         private readonly IdentityService _identityService;
 
-        public AuthController(IdentityService identityService)
+        public IdentityController(IdentityService identityService)
         {
             _identityService = identityService;
         }
 
-        [HttpPost]
+        [HttpPost("auth")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -31,7 +31,7 @@ namespace WorldOfPowerTools.API.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("registration")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Registration(string login, string password)

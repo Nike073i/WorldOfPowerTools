@@ -21,6 +21,9 @@ namespace WorldOfPowerTools.API
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddTransient<IProductRepository, DbProductRepository>();
+            services.AddTransient<IOrderRepository, DbOrderRepository>();
+            services.AddTransient<ICartLineRepository, DbCartLineRepository>();
+            services.AddTransient<IUserRepository, DbUserRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

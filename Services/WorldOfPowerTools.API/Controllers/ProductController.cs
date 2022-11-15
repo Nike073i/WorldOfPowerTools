@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WorldOfPowerTools.Domain.Enums;
+using WorldOfPowerTools.Domain.Exceptions;
 using WorldOfPowerTools.Domain.Models.Entities;
 using WorldOfPowerTools.Domain.Repositories;
 
@@ -10,10 +11,12 @@ namespace WorldOfPowerTools.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductRepository productRepository, IOrderRepository orderRepository)
         {
             _productRepository = productRepository;
+            _orderRepository = orderRepository;
         }
 
         [HttpGet("all")]
@@ -63,6 +66,8 @@ namespace WorldOfPowerTools.API.Controllers
         {
             try
             {
+                var createdOrders = await _orderRepository.GetByProductAndStatus(id, OrderStatus.Created);
+                if (createdOrders.Any()) throw new EntityCouldNotBeRemovedException("Продукт не может быть удален, так существуют необработанные заказы с ним");
                 var productId = await _productRepository.RemoveByIdAsync(id);
                 return Ok(productId);
             }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WorldOfPowerTools.Domain.Models.Entities;
 using WorldOfPowerTools.Domain.Repositories;
 
 namespace WorldOfPowerTools.API.Controllers
@@ -7,10 +8,12 @@ namespace WorldOfPowerTools.API.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
+        private readonly Cart _cart;
         private readonly IUserRepository _userRepository;
 
-        public CartController(IUserRepository userRepository)
+        public CartController(Cart cart, IUserRepository userRepository)
         {
+            _cart = cart;
             _userRepository = userRepository;
         }
 
@@ -20,7 +23,7 @@ namespace WorldOfPowerTools.API.Controllers
         public async Task<IActionResult> GetProducts(Guid userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);
-            return user == null ? NotFound() : Ok(user.GetCartProducts());
+            return user == null ? NotFound() : Ok(await _cart.GetUserProducts(userId));
         }
 
         [HttpPut("add")]
@@ -33,7 +36,7 @@ namespace WorldOfPowerTools.API.Controllers
             if (user == null) return NotFound("Пользователь не найден");
             try
             {
-                user.AddProductInCart(productId, quantity);
+                await _cart.AddProduct(userId, productId, quantity);
                 await _userRepository.SaveAsync(user);
             }
             catch (Exception ex)
@@ -54,7 +57,7 @@ namespace WorldOfPowerTools.API.Controllers
             if (user == null) return NotFound("Пользователь не найден");
             try
             {
-                user.RemoveProductFromCart(productId, quantity);
+                await _cart.RemoveProduct(userId, productId, quantity);
                 await _userRepository.SaveAsync(user);
             }
             catch (Exception ex)
@@ -75,7 +78,7 @@ namespace WorldOfPowerTools.API.Controllers
             if (user == null) return NotFound("Пользователь не найден");
             try
             {
-                user.ClearCart();
+                await _cart.Clear(userId);
                 await _userRepository.SaveAsync(user);
             }
             catch (Exception ex)
