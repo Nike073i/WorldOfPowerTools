@@ -18,6 +18,14 @@ namespace WorldOfPowerTools.Domain.Test.Models.Entities
             Assert.Throws(awaitingException, construct);
         }
 
+        static readonly object[] CreateCartLineWithBadArgsCases =
+        {
+            new object?[] { Guid.Empty, testProductId, testQuantity, typeof(ArgumentNullException) },
+            new object?[] { testUserId, Guid.Empty, testQuantity, typeof(ArgumentNullException) },
+            new object?[] { testUserId, testProductId, CartLine.MaxProductQuantity + 1, typeof(ArgumentOutOfRangeException) },
+            new object?[] { testUserId, testProductId, CartLine.MinProductQuantity - 1, typeof(ArgumentOutOfRangeException) },
+        };
+
         [Test]
         public void CreateCartLineCorrect()
         {
@@ -27,12 +35,29 @@ namespace WorldOfPowerTools.Domain.Test.Models.Entities
             Assert.AreEqual(cartLine.Quantity, testQuantity);
         }
 
-        static readonly object[] CreateCartLineWithBadArgsCases =
+        [Test]
+        [TestCaseSource(nameof(SetQuantityWithBadValueCases))]
+        public void SetQuantityWithBadValue(int quantity, Type awaitingException)
         {
-            new object?[] { Guid.Empty, testProductId, testQuantity, typeof(ArgumentNullException) },
-            new object?[] { testUserId, Guid.Empty, testQuantity, typeof(ArgumentNullException) },
-            new object?[] { testUserId, testProductId, CartLine.MaxProductQuantity + 1, typeof(ArgumentOutOfRangeException) },
-            new object?[] { testUserId, testProductId, CartLine.MinProductQuantity - 1, typeof(ArgumentOutOfRangeException) },
+            var cartLine = new CartLine(testUserId, testProductId, testQuantity);
+            Assert.Throws(awaitingException, () => cartLine.Quantity = quantity);
+        }
+
+        static readonly object[] SetQuantityWithBadValueCases =
+        {
+            new object?[] { CartLine.MaxProductQuantity + 1, typeof(ArgumentOutOfRangeException) },
+            new object?[] { CartLine.MinProductQuantity - 1, typeof(ArgumentOutOfRangeException) },
         };
+
+        [Test]
+        public void SetQuantityCorrect()
+        {
+            var cartLine = new CartLine(testUserId, testProductId, testQuantity);
+            int newQuantity = 159;
+            cartLine.Quantity = newQuantity;
+            Assert.AreEqual(cartLine.UserId, testUserId);
+            Assert.AreEqual(cartLine.ProductId, testProductId);
+            Assert.AreEqual(cartLine.Quantity, newQuantity);
+        }
     }
 }
