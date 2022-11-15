@@ -10,6 +10,14 @@ namespace WorldOfPowerTools.DAL.Repositories
     {
         public DbOrderRepository(WorldOfPowerToolsDb context) : base(context) { }
 
+        public async Task<IEnumerable<Order>> GetByProductAndStatus(Guid productId, OrderStatus status)
+        {
+            var orderInStatus = Items.Where(order => order.Status == status);
+            var ordersItems = orderInStatus.Select(order => order.OrderItems);
+            Predicate<OrderProduct> orderContainsProduct = (OrderProduct orderProduct) => orderProduct.ProductId == productId;
+            return await Items.Where(order => order.OrderItems.Any(orderProducts => orderContainsProduct(orderProducts))).ToListAsync();
+        }
+
         public async Task<IEnumerable<Order>> GetByStatusAsync(OrderStatus status, int skip = 0, int? take = null)
         {
             var itemsByStatus = Items.Where(product => product.Status == status);

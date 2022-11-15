@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WorldOfPowerTools.DAL.Context;
-using WorldOfPowerTools.DAL.Exceptions;
+using WorldOfPowerTools.Domain.Exceptions;
 using WorldOfPowerTools.Domain.Models.Entities;
 using WorldOfPowerTools.Domain.Repositories;
 
@@ -33,7 +33,7 @@ namespace WorldOfPowerTools.DAL.Repositories
             return await Items.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public virtual async Task<Guid> RemoveByIdAsync(Guid id)
+        public async Task<Guid> RemoveByIdAsync(Guid id)
         {
             var entity = await Set.FirstOrDefaultAsync(x => x.Id == id);
             if (entity == null) throw new EntityNotFoundException("Ошибка удаления по Id: Запись не найдена");
