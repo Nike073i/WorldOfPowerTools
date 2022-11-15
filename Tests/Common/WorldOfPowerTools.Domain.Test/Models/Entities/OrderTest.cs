@@ -14,9 +14,9 @@ namespace WorldOfPowerTools.Domain.Test.Models.Entities
         private static Address testAddress = new Address("Тестовая страна", "Тестовый город", "Тестовая улица", "30б", 100, "443444");
         private static ContactData testContactData = new ContactData("+74999999999", "test@mail.ru");
         private static IEnumerable<CartLine> testCartLines = new List<CartLine> {
-            new CartLine(Guid.NewGuid(), 10),
-            new CartLine(Guid.NewGuid(), 20),
-            new CartLine(Guid.NewGuid(), 30),
+            new CartLine(testUserId, Guid.NewGuid(), 10),
+            new CartLine(testUserId, Guid.NewGuid(), 20),
+            new CartLine(testUserId, Guid.NewGuid(), 30),
         };
 
         [Test]

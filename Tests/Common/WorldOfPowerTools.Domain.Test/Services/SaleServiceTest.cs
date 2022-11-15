@@ -30,9 +30,9 @@ namespace WorldOfPowerTools.Domain.Test.Services
 
         private static IEnumerable<CartLine> testCartLines = new List<CartLine>
         {
-            new CartLine(product1Id, 5),
-            new CartLine(product2Id, 10),
-            new CartLine(product3Id, 15)
+            new CartLine(testUserId, product1Id, 5),
+            new CartLine(testUserId, product2Id, 10),
+            new CartLine(testUserId, product3Id, 15)
         };
 
         [Test]
@@ -98,6 +98,12 @@ namespace WorldOfPowerTools.Domain.Test.Services
             return orderRepository.Object;
         }
 
+        private static ICartLineRepository GetCartLineRepository()
+        {
+            var cartLineRepository = new Mock<ICartLineRepository>();
+            return cartLineRepository.Object;
+        }
+
         private static IUserRepository GetUserRepository()
         {
             var userRepository = new Mock<IUserRepository>();
@@ -105,14 +111,22 @@ namespace WorldOfPowerTools.Domain.Test.Services
             return userRepository.Object;
         }
 
-        private SaleService GetSaleService(PriceCalculator? priceCalculator = null, IOrderRepository? orderRepository = null,
+        private static Cart GetCart(ICartLineRepository? cartLineRepository = null)
+        {
+            cartLineRepository ??= GetCartLineRepository();
+            var cart = new Mock<Cart>(cartLineRepository);
+            return cart.Object;
+        }
+
+        private SaleService GetSaleService(PriceCalculator? priceCalculator = null, Cart? cart = null, IOrderRepository? orderRepository = null,
             IProductRepository? productRepository = null, IUserRepository? userRepository = null)
         {
+            priceCalculator ??= GetPriceCalculator();
+            cart = GetCart();
             productRepository ??= GetProductRepository();
             orderRepository ??= GetOrderRepository();
             userRepository ??= GetUserRepository();
-            priceCalculator ??= GetPriceCalculator();
-            return new SaleService(priceCalculator, orderRepository, productRepository, userRepository);
+            return new SaleService(priceCalculator, cart, orderRepository, productRepository, userRepository);
         }
 
         static object[] CreateOrderIncorrectCases =

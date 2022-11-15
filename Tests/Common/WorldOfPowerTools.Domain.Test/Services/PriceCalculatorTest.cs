@@ -24,6 +24,7 @@ namespace WorldOfPowerTools.Domain.Test.Services
         [Test]
         public async Task CalculatePriceCorrect()
         {
+            var userId = Guid.NewGuid();
             var product1 = ProductTest.CreateProduct(price: 150d);
             var product1Id = Guid.NewGuid();
             var product2 = ProductTest.CreateProduct(price: 450d);
@@ -32,9 +33,9 @@ namespace WorldOfPowerTools.Domain.Test.Services
             var product3Id = Guid.NewGuid();
             var products = new List<CartLine>
             {
-                new CartLine(product1Id, product1.Quantity),
-                new CartLine(product2Id, product2.Quantity),
-                new CartLine(product3Id, product3.Quantity),
+                new CartLine(userId, product1Id, product1.Quantity),
+                new CartLine(userId, product2Id, product2.Quantity),
+                new CartLine(userId, product3Id, product3.Quantity),
             };
             var productRepository = new Mock<IProductRepository>();
             productRepository.Setup((x) => x.GetByIdAsync(product1Id)).ReturnsAsync(product1);
