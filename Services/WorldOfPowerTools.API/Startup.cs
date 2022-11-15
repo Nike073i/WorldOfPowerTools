@@ -17,7 +17,7 @@ namespace WorldOfPowerTools.API
         public void ConfigureServices(IServiceCollection services)
         {
             var dbConnection = Configuration.GetSection("Database").GetConnectionString("MSSQL");
-            services.AddDbContext<WorldOfPowerToolsDb>(options => options.UseSqlServer(dbConnection));
+            services.AddDbContext<WorldOfPowerToolsDb>(options => options.UseSqlServer(dbConnection, x => x.MigrationsAssembly("WorldOfPowerTools.DAL.SqlServer")));
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddTransient<IProductRepository, DbProductRepository>();
@@ -26,10 +26,11 @@ namespace WorldOfPowerTools.API
             services.AddTransient<IUserRepository, DbUserRepository>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WorldOfPowerToolsDb context)
         {
             if (env.IsDevelopment())
             {
+                context.Database.Migrate();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
