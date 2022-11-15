@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WorldOfPowerTools.API.Extensions;
 using WorldOfPowerTools.Domain.Enums;
 using WorldOfPowerTools.Domain.Exceptions;
 using WorldOfPowerTools.Domain.Models.Entities;
 using WorldOfPowerTools.Domain.Repositories;
+using WorldOfPowerTools.Domain.Services;
 
 namespace WorldOfPowerTools.API.Controllers
 {
@@ -10,11 +13,15 @@ namespace WorldOfPowerTools.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+        private const Actions AddProductAccess = Actions.Products;
+
+        private readonly SecurityService _securityService;
         private readonly IProductRepository _productRepository;
         private readonly IOrderRepository _orderRepository;
 
-        public ProductController(IProductRepository productRepository, IOrderRepository orderRepository)
+        public ProductController(SecurityService securityService, IProductRepository productRepository, IOrderRepository orderRepository)
         {
+            _securityService = securityService;
             _productRepository = productRepository;
             _orderRepository = orderRepository;
         }
@@ -42,11 +49,14 @@ namespace WorldOfPowerTools.API.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> AddProduct(string name, double price, string description, int quantity,
             Category category = Category.Screwdriver, bool availability = true)
         {
+            if (!this.IsAvailableRequest(_securityService, AddProductAccess)) return StatusCode(StatusCodes.Status405MethodNotAllowed);
             try
             {
                 var product = new Product(name, price, category, description, quantity, availability);

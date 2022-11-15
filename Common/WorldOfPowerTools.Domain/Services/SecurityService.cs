@@ -17,7 +17,12 @@ namespace WorldOfPowerTools.Domain.Services
         {
             if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId));
             var user = await _userRepository.GetByIdAsync(userId);
-            return user != null && user.Rights.IsSet(action);
+            return user != null && UserOperationAvailability(user.Rights, action);
+        }
+
+        public bool UserOperationAvailability(Actions userRights, Actions action)
+        {
+            return userRights.IsSet(action);
         }
     }
 }
