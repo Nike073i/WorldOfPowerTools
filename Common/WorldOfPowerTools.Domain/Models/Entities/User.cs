@@ -8,7 +8,6 @@ namespace WorldOfPowerTools.Domain.Models.Entities
     {
         public static readonly int MinLoginLength = 5;
         public static readonly int MaxLoginLength = 50;
-        private Cart _cart;
         public string Login { get; protected set; }
         public string PasswordHash { get; protected set; }
         public PersonData? PersonData { get; set; }
@@ -28,7 +27,6 @@ namespace WorldOfPowerTools.Domain.Models.Entities
             Login = login;
             PasswordHash = passwordHash;
             Rights = rights;
-            _cart = new Cart();
         }
 
         public User AllowAction(Actions action)
@@ -36,32 +34,11 @@ namespace WorldOfPowerTools.Domain.Models.Entities
             Rights = Rights.Set(action);
             return this;
         }
-        
+
         public User ProhibitAction(Actions action)
         {
             Rights = Rights.Clear(action);
             return this;
-        }
-
-        public IEnumerable<CartLine> GetCartProducts()
-        {
-            return _cart.GetProducts();
-        }
-        public User AddProductInCart(Guid productId, int count)
-        {
-            _cart.AddProduct(productId, count);
-            return this;
-        }
-
-        public User RemoveProductFromCart(Guid productId, int? count = null)
-        {
-            _cart.RemoveProduct(productId, count);
-            return this;
-        }
-
-        public int ClearCart()
-        {
-            return _cart.RemoveAll();
         }
     }
 }

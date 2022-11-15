@@ -8,7 +8,7 @@ namespace WorldOfPowerTools.Domain.Models.Entities
         public const double MinPrice = 1;
         public const double MaxPrice = 999_999_999d;
 
-        private IEnumerable<CartLine> _orderItems;
+        public IEnumerable<OrderProduct> OrderItems { get; protected set; }
         public Guid UserId { get; protected set; }
         public double Price { get; protected set; }
         public Address Address { get; protected set; }
@@ -31,12 +31,17 @@ namespace WorldOfPowerTools.Domain.Models.Entities
             ContactData = contactData;
             Status = OrderStatus.Created;
             DateCreated = DateTime.Now;
-            _orderItems = cartLines;
+            OrderItems = CreateOrderItems(cartLines);
         }
-        public IEnumerable<CartLine> GetOrderItems()
+
+        private IEnumerable<OrderProduct> CreateOrderItems(IEnumerable<CartLine> cartLines)
         {
-            return _orderItems;
+            var orderProducts = new List<OrderProduct>();
+            foreach (var cartLine in cartLines)
+                orderProducts.Add(new OrderProduct(cartLine.ProductId, cartLine.Quantity));
+            return orderProducts;
         }
+
         public double AddPriceSanctions(double cost)
         {
             if (cost == 0) throw new ArgumentNullException(nameof(cost));
