@@ -12,13 +12,13 @@ namespace WorldOfPowerTools.Domain.Test.Services
     public class SecurityServiceTests
     {
         [Test]
-        public void UserOperationAvailabilityNullUserId()
+        public async Task UserOperationAvailabilityNullUserId()
         {
             var userRepository = new Mock<IUserRepository>().Object;
             var service = new SecurityService(userRepository);
             var actions = Actions.Products;
-            AsyncTestDelegate operation = async () => await service.UserOperationAvailability(Guid.Empty, actions);
-            Assert.ThrowsAsync<ArgumentNullException>(operation);
+            var access = await service.UserOperationAvailability(Guid.Empty, actions);
+            Assert.False(access);
         }
 
         [Test]

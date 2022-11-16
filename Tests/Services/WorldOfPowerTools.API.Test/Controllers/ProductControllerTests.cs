@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using WorldOfPowerTools.API.Controllers;
-using WorldOfPowerTools.API.Extensions;
-using WorldOfPowerTools.API.Test.Infrastructure.Authorization;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Data;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Models.Entities;
+using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Authorization;
+using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Controllers;
+using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Requests;
 using WorldOfPowerTools.DAL.Context;
 using WorldOfPowerTools.DAL.Repositories;
 using WorldOfPowerTools.Domain.Enums;
@@ -56,13 +57,33 @@ namespace WorldOfPowerTools.API.Test.Controllers
         }
 
         [Test]
-        public async Task LoadingProduct()
+        public async Task GetByCategory() { }
+
+        [Test]
+        public async Task GetByIdOk() { }
+
+        [Test]
+        public async Task GetByIdNotFound() { }
+
+        [Test]
+        public async Task AddProductOk() { }
+
+        [Test]
+        public async Task AddProductNotAllowed() { }
+
+        [Test]
+        public async Task RemoveProductOk() { }
+
+        [Test]
+        public async Task RemoveProductNotAllowed() { }
+
+        [Test]
+        public async Task LoadingProductOk()
         {
             var productRepository = new DbProductRepository(_dbContext!);
             var productController = GetProductController(productRepository: productRepository);
-            var userRights = Actions.Products;
-            var user = new TestPrincipal(new Claim(ClaimsPrincipalExtensions.CLAIM_USER_RIGHTS, userRights.ToString()));
-            SetControllerContext(productController, user);
+            var user = ClaimsPrincipalHelper.CreateUser(userRights: Actions.Products);
+            ControllerHelper.SetControllerContext(productController, user);
 
             var productQuantity = 50;
             var productAddition = 15;
@@ -80,20 +101,53 @@ namespace WorldOfPowerTools.API.Test.Controllers
             Assert.AreEqual(resultProduct!.Quantity, productQuantity + productAddition);
         }
 
-        private ProductController GetProductController(IProductRepository? productRepository = null)
+        [Test]
+        public async Task LoadingProductNotAllowed()
         {
-            productRepository ??= new DbProductRepository(_dbContext!);
-            var userRepository = new DbUserRepository(_dbContext!);
-            var orderRepository = new DbOrderRepository(_dbContext!);
-            var securityService = new SecurityService(userRepository);
-
-            return new ProductController(securityService, productRepository, orderRepository);
+            var user = ClaimsPrincipalHelper.CreateUser(userRights: Actions.None);
+            var productController = GetProductController();
+            ControllerHelper.SetControllerContext(productController, user);
+            var productId = ProductHelper.TestProductId;
+            await RequestHelper.NotAllowedRequest(async () => await productController.AddProductToStore(productId, 15));
         }
 
-        private void SetControllerContext(in ControllerBase controller, ClaimsPrincipal user)
+        [Test]
+        public async Task LoadingProductNotFound()
         {
-            controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = new DefaultHttpContext { User = user };
+            var user = ClaimsPrincipalHelper.CreateUser(userRights: Actions.Products);
+            var productController = GetProductController();
+            ControllerHelper.SetControllerContext(productController, user);
+            var productId = Guid.NewGuid();
+            await RequestHelper.NotFoundRequest(async () => await productController.AddProductToStore(productId, 15));
+        }
+
+        [Test]
+        public async Task UnloadingProductOk() { }
+
+        [Test]
+        public async Task UnloadingProductNotAllowed() { }
+
+        [Test]
+        public async Task UnloadingProductNotFound() { }
+
+        [Test]
+        public async Task UpdateProductOk() { }
+
+        [Test]
+        public async Task UpdateProductNotAllowed() { }
+
+        [Test]
+        public async Task UpdateProductNotFound() { }
+
+        private ProductController GetProductController(IProductRepository? productRepository = null, IUserRepository? userRepository = null,
+            IOrderRepository? orderRepository = null, SecurityService? securityService = null)
+        {
+            productRepository ??= new DbProductRepository(_dbContext!);
+            userRepository ??= new DbUserRepository(_dbContext!);
+            orderRepository ??= new DbOrderRepository(_dbContext!);
+            securityService ??= new SecurityService(userRepository);
+
+            return new ProductController(securityService, productRepository, orderRepository);
         }
     }
 }

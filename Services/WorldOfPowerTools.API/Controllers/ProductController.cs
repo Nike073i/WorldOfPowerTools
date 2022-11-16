@@ -102,6 +102,7 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPut("loading")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> AddProductToStore([Required] Guid productId, [Required] int quantity)
         {
@@ -110,7 +111,7 @@ namespace WorldOfPowerTools.API.Controllers
             try
             {
                 var product = await _productRepository.GetByIdAsync(productId);
-                if (product == null) throw new Exception("Продукт по указанному Id не найден");
+                if (product == null) return NotFound("Продукт по указанному Id не найден");
                 product.AddToStore(quantity);
                 var changedProduct = await _productRepository.SaveAsync(product);
                 return Ok(changedProduct);
@@ -124,6 +125,7 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPut("unloading")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> RemoveProductFromStore([Required] Guid productId, [Required] int quantity)
         {
@@ -132,7 +134,7 @@ namespace WorldOfPowerTools.API.Controllers
             try
             {
                 var product = await _productRepository.GetByIdAsync(productId);
-                if (product == null) throw new Exception("Продукт по указанному Id не найден");
+                if (product == null) return NotFound("Продукт по указанному Id не найден");
                 product.RemoveFromStore(quantity);
                 var changedProduct = await _productRepository.SaveAsync(product);
                 return Ok(changedProduct);
@@ -146,6 +148,7 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPut("update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> UpdateProduct([Required] Guid productId, string? name = null, double? price = null, string? description = null, Category? category = null)
         {
@@ -154,7 +157,7 @@ namespace WorldOfPowerTools.API.Controllers
             try
             {
                 var product = await _productRepository.GetByIdAsync(productId);
-                if (product == null) throw new Exception("Продукт по указанному Id не найден");
+                if (product == null) return NotFound("Продукт по указанному Id не найден");
                 product.Name = name ?? product.Name;
                 product.Price = price ?? product.Price;
                 product.Description = description ?? product.Description;

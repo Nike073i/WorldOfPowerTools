@@ -66,6 +66,7 @@ namespace WorldOfPowerTools.Domain.Test.Services
         {
             var order = new Order(testUserId, 250d, testAddress, testContactData, testCartLines);
             var orderId = Guid.NewGuid();
+            order.ChangeStatus(OrderStatus.Handled);
 
             var orderRepository = new Mock<IOrderRepository>();
             orderRepository.Setup(x => x.GetByIdAsync(orderId)).ReturnsAsync(order);
