@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace WorldOfPowerTools.Domain.Models.ObjectValues
 {
@@ -6,7 +7,12 @@ namespace WorldOfPowerTools.Domain.Models.ObjectValues
     {
         public static readonly string ContactNumberPattern = @"^\+7\d{10}$";
         public static readonly string EmailPattern = @"^[a-zA-Z0-9]+[@][a-z]{4,}[.][a-z]{2,}";
+
+        [Required]
         public string ContactNumber { get; protected set; }
+
+        [Required]
+
         public string Email { get; protected set; }
 
 #nullable disable

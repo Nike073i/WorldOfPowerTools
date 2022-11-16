@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using WorldOfPowerTools.API.Extensions;
 using WorldOfPowerTools.Domain.Enums;
 using WorldOfPowerTools.Domain.Repositories;
@@ -39,7 +40,7 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpGet("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById([Required] Guid id)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), GetByIdAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
@@ -49,7 +50,7 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> RemoveUser(Guid id)
+        public async Task<IActionResult> RemoveUser([Required] Guid id)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), RemoveAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
@@ -67,7 +68,7 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPut("add_rights")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddUserRights(Guid userId, Actions action)
+        public async Task<IActionResult> AddUserRights([Required] Guid userId, [Required] Actions action)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), AddUserRightsAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
@@ -88,7 +89,7 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPut("remove_rights")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> RemoveUserRights(Guid userId, Actions action)
+        public async Task<IActionResult> RemoveUserRights([Required] Guid userId, [Required] Actions action)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), RemoveUserRightsAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");

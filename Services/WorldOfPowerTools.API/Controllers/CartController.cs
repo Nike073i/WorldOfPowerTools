@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using WorldOfPowerTools.API.Extensions;
 using WorldOfPowerTools.Domain.Enums;
 using WorldOfPowerTools.Domain.Repositories;
@@ -32,7 +33,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> GetProducts(Guid userId)
+        public async Task<IActionResult> GetProducts([Required] Guid userId)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), GetProductsAccess) ||
                 !_securityService.IsIndividualOperation(User.GetUserId(), userId))
@@ -46,7 +47,8 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> AddProduct(Guid userId, Guid productId, int quantity)
+        
+        public async Task<IActionResult> AddProduct([Required] Guid userId, [Required] Guid productId, [Required] int quantity)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), AddProductAccess) ||
                 !_securityService.IsIndividualOperation(User.GetUserId(), userId))
@@ -73,7 +75,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> RemoveProduct(Guid userId, Guid productId, int? quantity = null)
+        public async Task<IActionResult> RemoveProduct([Required] Guid userId, [Required] Guid productId, int? quantity = null)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), RemoveProductAccess) ||
                 !_securityService.IsIndividualOperation(User.GetUserId(), userId))
@@ -100,7 +102,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> ClearCart(Guid userId)
+        public async Task<IActionResult> ClearCart([Required] Guid userId)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), ClearCartAccess) ||
                 !_securityService.IsIndividualOperation(User.GetUserId(), userId))

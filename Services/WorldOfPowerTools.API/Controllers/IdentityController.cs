@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using WorldOfPowerTools.API.Services;
 using WorldOfPowerTools.Domain.Services;
 
@@ -21,7 +22,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Authorization(string login, string password)
+        public async Task<IActionResult> Authorization([Required] string login, [Required] string password)
         {
             try
             {
@@ -37,7 +38,7 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPost("registration")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Registration(string login, string password)
+        public async Task<IActionResult> Registration([Required] string login, [Required] string password)
         {
             try
             {

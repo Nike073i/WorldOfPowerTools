@@ -1,12 +1,25 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace WorldOfPowerTools.Domain.Models.ObjectValues
 {
     public class Address
     {
+        [Required]
         public string Country { get; protected set; }
+
+        [Required]
         public string City { get; protected set; }
+
+        [Required]
         public string Street { get; protected set; }
+
+        [Required]
         public string House { get; protected set; }
+
+        [Required]
         public int Flat { get; protected set; }
+
+        [Required]
         public string PostalCode { get; protected set; }
 
 #nullable disable

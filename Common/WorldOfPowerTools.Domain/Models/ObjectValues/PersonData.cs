@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace WorldOfPowerTools.Domain.Models.ObjectValues
 {
     public class PersonData
@@ -5,8 +7,13 @@ namespace WorldOfPowerTools.Domain.Models.ObjectValues
         public static readonly DateTime BirthdayMinDate = new(1900, 01, 01);
         public static readonly DateTime BirthdayMaxDate = DateTime.Today;
 
+        [Required]
         public string FirstName { get; protected set; }
+
+        [Required]
         public string SecondName { get; protected set; }
+
+        [Required]
         public DateTime Birthday { get; protected set; }
 
 #nullable disable

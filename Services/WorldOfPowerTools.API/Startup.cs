@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 using System.Text;
 using WorldOfPowerTools.API.Services;
 using WorldOfPowerTools.DAL.Context;
@@ -24,7 +25,7 @@ namespace WorldOfPowerTools.API
         {
             var dbConnection = Configuration.GetSection("Database").GetConnectionString("MSSQL");
             services.AddDbContext<WorldOfPowerToolsDb>(options => options.UseSqlServer(dbConnection, x => x.MigrationsAssembly("WorldOfPowerTools.DAL.SqlServer")));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter())); ;
             services.AddSwaggerGen(options =>
             {
                 options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme()
@@ -51,6 +52,7 @@ namespace WorldOfPowerTools.API
                     }
                 });
             });
+            services.AddSwaggerGenNewtonsoftSupport();
 
             services.AddAuthentication(option =>
             {

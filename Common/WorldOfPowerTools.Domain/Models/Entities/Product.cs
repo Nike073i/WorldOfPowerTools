@@ -98,26 +98,26 @@ namespace WorldOfPowerTools.Domain.Models.Entities
             Availability = quantity >= MinAvailableQuantity;
         }
 
-        private void ThrowExceptionIfNameIncorrect(string value)
+        private void ThrowExceptionIfNameIncorrect(string name)
         {
-            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(nameof(value));
-            if (value.Length < MinNameLength || value.Length > MaxNameLength) throw new ArgumentOutOfRangeException(nameof(value));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (name.Length < MinNameLength || name.Length > MaxNameLength) throw new ArgumentOutOfRangeException(nameof(name));
         }
 
-        private void ThrowExceptionIfPriceIncorrect(double value)
+        private void ThrowExceptionIfPriceIncorrect(double price)
         {
-            if (value < MinPrice || value > MaxPrice) throw new ArgumentOutOfRangeException(nameof(value));
+            if (price < MinPrice || price > MaxPrice) throw new ArgumentOutOfRangeException(nameof(price));
         }
 
-        private void ThrowExceptionIfDescriptionIncorrect(string value)
+        private void ThrowExceptionIfDescriptionIncorrect(string description)
         {
-            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(nameof(value));
-            if (value.Length > MaxDescriptionLength) throw new ArgumentOutOfRangeException(nameof(value));
+            if (string.IsNullOrEmpty(description)) throw new ArgumentNullException(nameof(description));
+            if (description.Length > MaxDescriptionLength) throw new ArgumentOutOfRangeException(nameof(description));
         }
 
-        private void ThrowExceptionIfQuantityIncorrect(int value)
+        private void ThrowExceptionIfQuantityIncorrect(int quantity)
         {
-            if (value < MinQuantity || value > MaxQuantity) throw new ArgumentOutOfRangeException(nameof(value));
+            if (quantity < MinQuantity || quantity > MaxQuantity) throw new ArgumentOutOfRangeException(nameof(quantity));
         }
     }
 }
