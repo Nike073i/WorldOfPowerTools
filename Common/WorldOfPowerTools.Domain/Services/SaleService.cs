@@ -59,7 +59,7 @@ namespace WorldOfPowerTools.Domain.Services
             return await UpdateOrderStatus(orderId, OrderStatus.Sent, OrderStatus.Delivered);
         }
 
-        public async Task<Order> ReceivedOrder(Guid orderId)
+        public async Task<Order> ReceiveOrder(Guid orderId)
         {
             return await UpdateOrderStatus(orderId, OrderStatus.Delivered, OrderStatus.Received);
         }
@@ -91,12 +91,19 @@ namespace WorldOfPowerTools.Domain.Services
             return listChangedProducts;
         }
 
+        private async Task<bool> CancelCreatedOrder(Guid orderId)
+        {
+            await _orderRepository.RemoveByIdAsync(orderId);
+            return true;
+        }
+
         public async Task<bool> CancelOrder(Guid id)
         {
             if (id == Guid.Empty) throw new ArgumentNullException(nameof(id));
             var order = await _orderRepository.GetByIdAsync(id);
             if (order == null) return false;
             if (order.Status == OrderStatus.Canceled || order.Status == OrderStatus.Received) throw new OrderChangeStatusException("Заказ невозмножно отменить");
+            if (order.Status == OrderStatus.Created) return await CancelCreatedOrder(id);
             order.ChangeStatus(OrderStatus.Canceled);
             var listChangedProducts = await RestoreProducts(order.OrderItems);
             await _productRepository.SaveRangeAsync(listChangedProducts);

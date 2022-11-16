@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using WorldOfPowerTools.API.Services;
 using WorldOfPowerTools.DAL.Context;
 using WorldOfPowerTools.DAL.Repositories;
 using WorldOfPowerTools.Domain.Repositories;
+using WorldOfPowerTools.Domain.Services;
 
 namespace WorldOfPowerTools.API
 {
@@ -34,10 +36,27 @@ namespace WorldOfPowerTools.API
                     Description = "Bearer Authentication with JWT Token",
                     Type = SecuritySchemeType.Http
                 });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Id = JwtBearerDefaults.AuthenticationScheme,
+                                Type = ReferenceType.SecurityScheme
+                            }
+                        },
+                        new List<string>()
+                    }
+                });
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -56,6 +75,13 @@ namespace WorldOfPowerTools.API
             services.AddTransient<IOrderRepository, DbOrderRepository>();
             services.AddTransient<ICartLineRepository, DbCartLineRepository>();
             services.AddTransient<IUserRepository, DbUserRepository>();
+
+            services.AddTransient<IdentityService>();
+            services.AddTransient<SecurityService>();
+            services.AddTransient<Cart>();
+            services.AddTransient<SaleService>();
+            services.AddTransient<PriceCalculator>();
+            services.AddTransient<JwtService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WorldOfPowerToolsDb context)

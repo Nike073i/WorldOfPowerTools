@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WorldOfPowerTools.API.Services;
 using WorldOfPowerTools.Domain.Services;
 
 namespace WorldOfPowerTools.API.Controllers
@@ -8,10 +9,12 @@ namespace WorldOfPowerTools.API.Controllers
     public class IdentityController : ControllerBase
     {
         private readonly IdentityService _identityService;
+        private readonly JwtService _jwtService;
 
-        public IdentityController(IdentityService identityService)
+        public IdentityController(IdentityService identityService, JwtService jwtService)
         {
             _identityService = identityService;
+            _jwtService = jwtService;
         }
 
         [HttpPost("auth")]
@@ -23,7 +26,7 @@ namespace WorldOfPowerTools.API.Controllers
             try
             {
                 var user = await _identityService.Authorization(login, password);
-                return user != null ? Ok(user) : NotFound("Аутентификация не пройдена");
+                return user != null ? Ok(_jwtService.GenerateToken(user)) : NotFound("Аутентификация не пройдена");
             }
             catch (Exception ex)
             {

@@ -10,10 +10,15 @@ using WorldOfPowerTools.Domain.Services;
 namespace WorldOfPowerTools.API.Controllers
 {
     [Route("api/[controller]/")]
+    [Authorize]
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private const Actions AddProductAccess = Actions.Products;
+        private readonly Actions AddProductAccess = Actions.Products;
+        private readonly Actions RemoveProductAccess = Actions.Products;
+        private readonly Actions LoadingProductAccess = Actions.Products;
+        private readonly Actions UnloadingProductAccess = Actions.Products;
+        private readonly Actions UpdateProductAccess = Actions.Products;
 
         private readonly SecurityService _securityService;
         private readonly IProductRepository _productRepository;
@@ -27,6 +32,7 @@ namespace WorldOfPowerTools.API.Controllers
         }
 
         [HttpGet("all")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(int skip = 0, int? count = null)
         {
@@ -34,6 +40,7 @@ namespace WorldOfPowerTools.API.Controllers
         }
 
         [HttpGet("category")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByCategory(Category category, int skip = 0, int? count = null)
         {
@@ -41,6 +48,7 @@ namespace WorldOfPowerTools.API.Controllers
         }
 
         [HttpGet("{id:guid}")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(Guid id)
@@ -49,14 +57,14 @@ namespace WorldOfPowerTools.API.Controllers
         }
 
         [HttpPost("add")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> AddProduct(string name, double price, string description, int quantity,
             Category category = Category.Screwdriver, bool availability = true)
         {
-            if (!this.IsAvailableRequest(_securityService, AddProductAccess)) return StatusCode(StatusCodes.Status405MethodNotAllowed);
+            if (!_securityService.UserOperationAvailability(User.GetUserRights(), AddProductAccess))
+                return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
             try
             {
                 var product = new Product(name, price, category, description, quantity, availability);
@@ -72,8 +80,11 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> RemoveProduct(Guid id)
         {
+            if (!_securityService.UserOperationAvailability(User.GetUserRights(), RemoveProductAccess))
+                return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
             try
             {
                 var createdOrders = await _orderRepository.GetByProductAndStatus(id, OrderStatus.Created);
@@ -90,8 +101,11 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPut("loading")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> AddProductToStore(Guid productId, int quantity)
         {
+            if (!_securityService.UserOperationAvailability(User.GetUserRights(), LoadingProductAccess))
+                return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
             try
             {
                 var product = await _productRepository.GetByIdAsync(productId);
@@ -109,8 +123,11 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPut("unloading")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> RemoveProductFromStore(Guid productId, int quantity)
         {
+            if (!_securityService.UserOperationAvailability(User.GetUserRights(), UnloadingProductAccess))
+                return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
             try
             {
                 var product = await _productRepository.GetByIdAsync(productId);
@@ -128,8 +145,11 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPut("update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> UpdateProduct(Guid productId, string? name = null, double? price = null, string? description = null, Category? category = null)
         {
+            if (!_securityService.UserOperationAvailability(User.GetUserRights(), UpdateProductAccess))
+                return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
             try
             {
                 var product = await _productRepository.GetByIdAsync(productId);

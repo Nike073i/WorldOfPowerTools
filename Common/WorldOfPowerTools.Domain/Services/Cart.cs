@@ -1,7 +1,7 @@
 using WorldOfPowerTools.Domain.Models.ObjectValues;
 using WorldOfPowerTools.Domain.Repositories;
 
-namespace WorldOfPowerTools.Domain.Models.Entities
+namespace WorldOfPowerTools.Domain.Services
 {
     public class Cart
     {

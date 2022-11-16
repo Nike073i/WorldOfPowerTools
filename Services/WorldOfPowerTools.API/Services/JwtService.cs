@@ -32,7 +32,6 @@ namespace WorldOfPowerTools.API.Services
             var token = new JwtSecurityToken(
               issuer: _configuration["Jwt:Issuer"],
               audience: _configuration["Jwt:Audience"],
-              notBefore: now,
               claims: claims,
               expires: now.AddDays(1),
               signingCredentials: credentials);

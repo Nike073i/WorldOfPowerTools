@@ -3,9 +3,9 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WorldOfPowerTools.Domain.Models.Entities;
 using WorldOfPowerTools.Domain.Models.ObjectValues;
 using WorldOfPowerTools.Domain.Repositories;
+using WorldOfPowerTools.Domain.Services;
 
 namespace WorldOfPowerTools.Domain.Test.Services
 {

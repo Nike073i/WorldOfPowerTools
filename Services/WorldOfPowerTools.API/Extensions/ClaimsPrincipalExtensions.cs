@@ -8,9 +8,9 @@ namespace WorldOfPowerTools.API.Extensions
         public const string CLAIM_USER_GUID = "guid";
         public const string CLAIM_USER_RIGHTS = "rights";
 
-        public static int? GetUserId(this ClaimsPrincipal user)
+        public static Guid? GetUserId(this ClaimsPrincipal user)
         {
-            if (int.TryParse(user.FindFirstValue(CLAIM_USER_GUID), out var userUuid))
+            if (Guid.TryParse(user.FindFirstValue(CLAIM_USER_GUID), out var userUuid))
             {
                 return userUuid;
             }
