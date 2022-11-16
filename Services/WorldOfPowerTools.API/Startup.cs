@@ -90,7 +90,7 @@ namespace WorldOfPowerTools.API
         {
             if (env.IsDevelopment())
             {
-                context.Database.Migrate();
+                context.Database.EnsureCreated();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
