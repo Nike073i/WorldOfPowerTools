@@ -46,7 +46,7 @@ namespace WorldOfPowerTools.API.Controllers
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), GetByIdAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
-            return await _userRepository.GetByIdAsync(id) is { } item ? Ok(item) : NotFound();
+            return await _userRepository.GetByIdAsync(id) is { } item ? Ok(item) : NotFound("Пользователь по указанному Id не найден");
         }
 
         [HttpDelete("{id:guid}")]
@@ -81,7 +81,7 @@ namespace WorldOfPowerTools.API.Controllers
                 var user = await _userRepository.GetByIdAsync(userId);
                 if (user == null) return NotFound("Пользователь по указанному Id не найден");
                 user.AllowAction(action);
-                var changedUser = _userRepository.SaveAsync(user);
+                var changedUser = await _userRepository.SaveAsync(user);
                 return Ok(changedUser);
             }
             catch (Exception ex)

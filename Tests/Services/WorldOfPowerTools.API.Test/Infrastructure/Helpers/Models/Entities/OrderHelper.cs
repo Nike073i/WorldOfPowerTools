@@ -17,7 +17,6 @@ namespace WorldOfPowerTools.API.Test.Infrastructure.Helpers.Models.Entities
             userId ??= TestUserId;
             address ??= TestAddress;
             contactData ??= TestContactData;
-
             return new Order(userId.Value, price, address, contactData, cartLine);
         }
     }

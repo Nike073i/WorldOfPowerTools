@@ -9,7 +9,6 @@ using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Models.Entities;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Authorization;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Controllers;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Requests;
-using WorldOfPowerTools.DAL.Context;
 using WorldOfPowerTools.DAL.Repositories;
 using WorldOfPowerTools.Domain.Enums;
 using WorldOfPowerTools.Domain.Models.Entities;

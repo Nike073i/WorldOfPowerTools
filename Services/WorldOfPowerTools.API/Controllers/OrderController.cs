@@ -77,7 +77,6 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPost("create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> CreateOrder([Required] Guid userId, [FromQuery][Required] Address address, [FromQuery][Required] ContactData contactData)
         {
@@ -86,8 +85,6 @@ namespace WorldOfPowerTools.API.Controllers
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
             try
             {
-                var user = await _userRepository.GetByIdAsync(userId);
-                if (user == null) return NotFound("Пользователь не найден");
                 var cartProduct = await _cart.GetUserProducts(userId);
                 if (!cartProduct.Any()) throw new OrderCouldNotBeCreatedException("Корзина пользователя пуста");
                 var order = await _saleService.CreateOrder(userId, cartProduct, address, contactData);
