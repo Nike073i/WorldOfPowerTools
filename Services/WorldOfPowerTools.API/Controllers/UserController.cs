@@ -13,11 +13,11 @@ namespace WorldOfPowerTools.API.Controllers
     [Authorize]
     public class UserController : ControllerBase
     {
-        private readonly Actions GetAllAccess = Actions.Users;
-        private readonly Actions GetByIdAccess = Actions.Users;
-        private readonly Actions RemoveAccess = Actions.Users;
-        private readonly Actions AddUserRightsAccess = Actions.Users;
-        private readonly Actions RemoveUserRightsAccess = Actions.Users;
+        public static readonly Actions GetAllAccess = Actions.Users;
+        public static readonly Actions GetByIdAccess = Actions.Users;
+        public static readonly Actions RemoveAccess = Actions.Users;
+        public static readonly Actions AddUserRightsAccess = Actions.Users;
+        public static readonly Actions RemoveUserRightsAccess = Actions.Users;
 
         private readonly SecurityService _securityService;
         private readonly IUserRepository _userRepository;
@@ -30,6 +30,7 @@ namespace WorldOfPowerTools.API.Controllers
 
         [HttpGet("all")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> GetAll(int skip = 0, int? count = null)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), GetAllAccess))
@@ -40,6 +41,7 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpGet("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> GetById([Required] Guid id)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), GetByIdAccess))
@@ -50,6 +52,7 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> RemoveUser([Required] Guid id)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), RemoveAccess))
@@ -68,6 +71,7 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPut("add_rights")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AddUserRights([Required] Guid userId, [Required] Actions action)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), AddUserRightsAccess))
@@ -75,7 +79,7 @@ namespace WorldOfPowerTools.API.Controllers
             try
             {
                 var user = await _userRepository.GetByIdAsync(userId);
-                if (user == null) throw new Exception("Пользователь по указанному Id не найден");
+                if (user == null) return NotFound("Пользователь по указанному Id не найден");
                 user.AllowAction(action);
                 var changedUser = _userRepository.SaveAsync(user);
                 return Ok(changedUser);
@@ -89,6 +93,8 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpPut("remove_rights")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> RemoveUserRights([Required] Guid userId, [Required] Actions action)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), RemoveUserRightsAccess))
@@ -96,7 +102,7 @@ namespace WorldOfPowerTools.API.Controllers
             try
             {
                 var user = await _userRepository.GetByIdAsync(userId);
-                if (user == null) throw new Exception("Пользователь по указанному Id не найден");
+                if (user == null) return NotFound("Пользователь по указанному Id не найден");
                 user.ProhibitAction(action);
                 var changedUser = await _userRepository.SaveAsync(user);
                 return Ok(changedUser);

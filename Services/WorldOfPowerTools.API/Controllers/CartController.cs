@@ -13,10 +13,10 @@ namespace WorldOfPowerTools.API.Controllers
     [Authorize]
     public class CartController : ControllerBase
     {
-        private readonly Actions GetProductsAccess = Actions.Cart;
-        private readonly Actions AddProductAccess = Actions.Cart;
-        private readonly Actions RemoveProductAccess = Actions.Cart;
-        private readonly Actions ClearCartAccess = Actions.Cart;
+        public static readonly Actions GetProductsAccess = Actions.Cart;
+        public static readonly Actions AddProductAccess = Actions.Cart;
+        public static readonly Actions RemoveProductAccess = Actions.Cart;
+        public static readonly Actions ClearCartAccess = Actions.Cart;
 
         private readonly SecurityService _securityService;
         private readonly Cart _cart;
@@ -31,23 +31,20 @@ namespace WorldOfPowerTools.API.Controllers
 
         [HttpGet("{userId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> GetProducts([Required] Guid userId)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), GetProductsAccess) ||
                 !_securityService.IsIndividualOperation(User.GetUserId(), userId))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
-            var user = await _userRepository.GetByIdAsync(userId);
-            return user == null ? NotFound() : Ok(await _cart.GetUserProducts(userId));
+            return Ok(await _cart.GetUserProducts(userId));
         }
 
         [HttpPut("add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        
+
         public async Task<IActionResult> AddProduct([Required] Guid userId, [Required] Guid productId, [Required] int quantity)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), AddProductAccess) ||
@@ -56,11 +53,7 @@ namespace WorldOfPowerTools.API.Controllers
 
             try
             {
-                var user = await _userRepository.GetByIdAsync(userId);
-                if (user == null) return NotFound("Пользователь не найден");
-
                 await _cart.AddProduct(userId, productId, quantity);
-                await _userRepository.SaveAsync(user);
             }
             catch (Exception ex)
             {
@@ -73,7 +66,6 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpDelete("remove")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> RemoveProduct([Required] Guid userId, [Required] Guid productId, int? quantity = null)
         {
@@ -83,11 +75,7 @@ namespace WorldOfPowerTools.API.Controllers
 
             try
             {
-                var user = await _userRepository.GetByIdAsync(userId);
-                if (user == null) return NotFound("Пользователь не найден");
-
                 await _cart.RemoveProduct(userId, productId, quantity);
-                await _userRepository.SaveAsync(user);
             }
             catch (Exception ex)
             {
@@ -100,20 +88,16 @@ namespace WorldOfPowerTools.API.Controllers
         [HttpDelete("clear")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> ClearCart([Required] Guid userId)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), ClearCartAccess) ||
                 !_securityService.IsIndividualOperation(User.GetUserId(), userId))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
-            
+
             try
             {
-                var user = await _userRepository.GetByIdAsync(userId);
-                if (user == null) return NotFound("Пользователь не найден");
                 await _cart.Clear(userId);
-                await _userRepository.SaveAsync(user);
             }
             catch (Exception ex)
             {

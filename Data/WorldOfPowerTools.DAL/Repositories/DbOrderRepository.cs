@@ -12,10 +12,22 @@ namespace WorldOfPowerTools.DAL.Repositories
 
         public async Task<IEnumerable<Order>> GetByProductAndStatus(Guid productId, OrderStatus status)
         {
-            var orderInStatus = Items.Where(order => order.Status == status);
-            var ordersItems = orderInStatus.Select(order => order.OrderItems);
-            Predicate<OrderProduct> orderContainsProduct = (OrderProduct orderProduct) => orderProduct.ProductId == productId;
-            return await Items.Where(order => order.OrderItems.Any(orderProducts => orderContainsProduct(orderProducts))).ToListAsync();
+            var orderInStatus = await Items.Where(order => order.Status == status).ToListAsync();
+            if (!orderInStatus.Any()) return Enumerable.Empty<Order>();
+
+            var orderContainsProduct = (OrderProduct orderProduct) => orderProduct.ProductId == productId;
+
+            var resultOrders = new List<Order>();
+            foreach (var order in orderInStatus)
+            {
+                foreach (var orderLine in order.OrderItems)
+                    if (orderContainsProduct(orderLine))
+                    {
+                        resultOrders.Add(order);
+                        break;
+                    }
+            }
+            return resultOrders;
         }
 
         public async Task<IEnumerable<Order>> GetByStatusAsync(OrderStatus status, int skip = 0, int? take = null)

@@ -20,6 +20,13 @@ namespace WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Requests
             CheckAwaitingStatusCode(objectResult, StatusCodes.Status404NotFound);
         }
 
+        public static async Task<ObjectResult> OkRequest(Func<Task<IActionResult>> request)
+        {
+            var objectResult = await InvokeRequest(request);
+            CheckAwaitingStatusCode(objectResult, StatusCodes.Status200OK);
+            return objectResult;
+        }
+
         private static void CheckAwaitingStatusCode(ObjectResult objectResult, int statusCode)
         {
             Assert.True(objectResult!.StatusCode == statusCode);

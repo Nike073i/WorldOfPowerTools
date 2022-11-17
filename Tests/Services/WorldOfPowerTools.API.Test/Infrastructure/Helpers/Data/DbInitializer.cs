@@ -13,15 +13,19 @@ namespace WorldOfPowerTools.API.Test.Infrastructure.Helpers.Data
     {
         private readonly WorldOfPowerToolsDb _dbContext;
 
-        private string user1Login = "user1";
-        private string user2Login = "user2";
-        private string user3Login = "user3";
-        private string user4Login = "user4";
-        private string user5Login = "user5";
+        public static readonly string user1Login = "user1";
+        public static readonly string user2Login = "user2";
+        public static readonly string user3Login = "user3";
+        public static readonly string user4Login = "user4";
+        public static readonly string user5Login = "user5";
 
         public DbInitializer(WorldOfPowerToolsDb dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public void RecreateDatabase()
+        {
             _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
         }

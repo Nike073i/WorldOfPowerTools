@@ -22,7 +22,7 @@ namespace WorldOfPowerTools.DAL.Repositories
 
         public async Task<int> RemoveByUserIdAsync(Guid userId)
         {
-            var cartLines = Set.Where(x => x.ProductId == userId);
+            var cartLines = Set.Where(x => x.UserId == userId);
             return await RemoveRange(cartLines);
         }
 

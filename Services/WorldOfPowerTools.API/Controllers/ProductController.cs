@@ -15,11 +15,11 @@ namespace WorldOfPowerTools.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly Actions AddProductAccess = Actions.Products;
-        private readonly Actions RemoveProductAccess = Actions.Products;
-        private readonly Actions LoadingProductAccess = Actions.Products;
-        private readonly Actions UnloadingProductAccess = Actions.Products;
-        private readonly Actions UpdateProductAccess = Actions.Products;
+        public static readonly Actions AddProductAccess = Actions.Products;
+        public static readonly Actions RemoveProductAccess = Actions.Products;
+        public static readonly Actions LoadingProductAccess = Actions.Products;
+        public static readonly Actions UnloadingProductAccess = Actions.Products;
+        public static readonly Actions UpdateProductAccess = Actions.Products;
 
         private readonly SecurityService _securityService;
         private readonly IProductRepository _productRepository;
@@ -54,7 +54,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById([Required] Guid id)
         {
-            return await _productRepository.GetByIdAsync(id) is { } item ? Ok(item) : NotFound();
+            return await _productRepository.GetByIdAsync(id) is { } item ? Ok(item) : NotFound("Продукт по указанному Id не найден");
         }
 
         [HttpPost("add")]

@@ -15,15 +15,15 @@ namespace WorldOfPowerTools.API.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly Actions GetAllAccess = Actions.AllOrders;
-        private readonly Actions GetByIdAccess = Actions.AllOrders;
-        private readonly Actions GetMyOrderAccess = Actions.MyOrders;
-        private readonly Actions CreateOrderAccess = Actions.MyOrders;
-        private readonly Actions CancelOrderAccess = Actions.AllOrders;
-        private readonly Actions SendOrderAccess = Actions.AllOrders;
-        private readonly Actions ConfirmOrderAccess = Actions.AllOrders;
-        private readonly Actions DeliveOrderAccess = Actions.AllOrders;
-        private readonly Actions ReceiveOrderAccess = Actions.AllOrders;
+        public static readonly Actions GetAllAccess = Actions.AllOrders;
+        public static readonly Actions GetByIdAccess = Actions.AllOrders;
+        public static readonly Actions GetMyOrderAccess = Actions.MyOrders;
+        public static readonly Actions CreateOrderAccess = Actions.MyOrders;
+        public static readonly Actions CancelOrderAccess = Actions.AllOrders;
+        public static readonly Actions SendOrderAccess = Actions.AllOrders;
+        public static readonly Actions ConfirmOrderAccess = Actions.AllOrders;
+        public static readonly Actions DeliveOrderAccess = Actions.AllOrders;
+        public static readonly Actions ReceiveOrderAccess = Actions.AllOrders;
 
 
         private readonly SecurityService _securityService;
@@ -54,12 +54,13 @@ namespace WorldOfPowerTools.API.Controllers
 
         [HttpGet("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         public async Task<IActionResult> GetById([Required] Guid id)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), GetByIdAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
-            return Ok(await _orderRepository.GetByIdAsync(id));
+            return await _orderRepository.GetByIdAsync(id) is { } item ? Ok(item) : NotFound("Заказ по указанному Id не найден");
         }
 
         [HttpGet("user")]

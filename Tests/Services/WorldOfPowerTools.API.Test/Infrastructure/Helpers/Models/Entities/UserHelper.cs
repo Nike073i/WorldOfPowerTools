@@ -4,7 +4,7 @@ using WorldOfPowerTools.Domain.Models.Entities;
 
 namespace WorldOfPowerTools.API.Test.Infrastructure.Helpers.Models.Entities
 {
-    public static class UserHepler
+    public static class UserHelper
     {
         public static readonly Guid TestUserId = new("76831ddb-61be-4778-ad77-2712b7c828eb");
         public const string TestUserLogin = "testUserLogin";
