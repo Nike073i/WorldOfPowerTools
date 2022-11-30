@@ -6,6 +6,7 @@ using Newtonsoft.Json.Converters;
 using System.Text;
 using WorldOfPowerTools.API.Services;
 using WorldOfPowerTools.DAL.Context;
+using WorldOfPowerTools.DAL.Helpers;
 using WorldOfPowerTools.DAL.Repositories;
 using WorldOfPowerTools.Domain.Repositories;
 using WorldOfPowerTools.Domain.Services;
@@ -90,7 +91,11 @@ namespace WorldOfPowerTools.API
         {
             if (env.IsDevelopment())
             {
-                context.Database.EnsureCreated();
+                if (context.Database.EnsureCreated())
+                {
+                    var initialyzer = new DbInitializer(context);
+                    initialyzer.InitializeAsync().Wait();
+                }
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
