@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorldOfPowerTools.API.Controllers;
+using WorldOfPowerTools.API.RequestModels.Product;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Data;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Models.Entities;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Authorization;
@@ -85,7 +86,14 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var productDescription = "newDescription";
             var productQuantity = 100;
 
-            var objectResult = await RequestHelper.OkRequest(async () => await productController.AddProduct(productName, productPrice, productDescription, productQuantity));
+            var model = new AddProductModel
+            {
+                Name = productName,
+                Price = productPrice,
+                Description = productDescription,
+                Quantity = productQuantity
+            };
+            var objectResult = await RequestHelper.OkRequest(async () => await productController.AddProduct(model));
             var resultProduct = objectResult!.Value as Product;
             Assert.IsNotNull(resultProduct);
             Assert.True(resultProduct!.Id != Guid.Empty);
@@ -102,12 +110,14 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var productController = GetProductController();
             ControllerHelper.SetControllerContext(productController, user);
 
-            var productName = "newName";
-            var productPrice = 500;
-            var productDescription = "newDescription";
-            var productQuantity = 100;
-
-            await RequestHelper.NotAllowedRequest(async () => await productController.AddProduct(productName, productPrice, productDescription, productQuantity));
+            var model = new AddProductModel
+            {
+                Name = "newName",
+                Price = 500,
+                Description = "newDescription",
+                Quantity = 100
+            };
+            await RequestHelper.NotAllowedRequest(async () => await productController.AddProduct(model));
         }
 
         [Test]
@@ -154,7 +164,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var productAddition = 15;
             var product = await productRepository.SaveAsync(ProductHelper.CreateProduct(quantity: productQuantity));
 
-            var objectResult = await RequestHelper.OkRequest(async () => await productController.AddProductToStore(product.Id, productAddition));
+            var model = new ChangeProductQuantityModel
+            {
+                ProductId = product.Id,
+                Quantity = productAddition
+            };
+            var objectResult = await RequestHelper.OkRequest(async () => await productController.AddProductToStore(model));
             var resultProduct = objectResult.Value as Product;
             Assert.IsNotNull(resultProduct);
             Assert.AreEqual(resultProduct!.Quantity, productQuantity + productAddition);
@@ -167,7 +182,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var productController = GetProductController();
             ControllerHelper.SetControllerContext(productController, user);
             var productId = ProductHelper.TestProductId;
-            await RequestHelper.NotAllowedRequest(async () => await productController.AddProductToStore(productId, 15));
+            var model = new ChangeProductQuantityModel
+            {
+                ProductId = productId,
+                Quantity = 15
+            };
+            await RequestHelper.NotAllowedRequest(async () => await productController.AddProductToStore(model));
         }
 
         [Test]
@@ -177,7 +197,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var productController = GetProductController();
             ControllerHelper.SetControllerContext(productController, user);
             var productId = Guid.NewGuid();
-            await RequestHelper.NotFoundRequest(async () => await productController.AddProductToStore(productId, 15));
+            var model = new ChangeProductQuantityModel
+            {
+                ProductId = productId,
+                Quantity = 15
+            };
+            await RequestHelper.NotFoundRequest(async () => await productController.AddProductToStore(model));
         }
 
         [Test]
@@ -194,8 +219,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var productQuantity = 50;
             var productRemoval = 15;
             var product = await productRepository.SaveAsync(ProductHelper.CreateProduct(quantity: productQuantity));
-
-            var objectResult = await RequestHelper.OkRequest(async () => await productController.RemoveProductFromStore(product.Id, productRemoval));
+            var model = new ChangeProductQuantityModel
+            {
+                ProductId = product.Id,
+                Quantity = productRemoval
+            };
+            var objectResult = await RequestHelper.OkRequest(async () => await productController.RemoveProductFromStore(model));
             var resultProduct = objectResult.Value as Product;
             Assert.IsNotNull(resultProduct);
             Assert.AreEqual(resultProduct!.Quantity, productQuantity - productRemoval);
@@ -208,7 +237,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var productController = GetProductController();
             ControllerHelper.SetControllerContext(productController, user);
             var productId = ProductHelper.TestProductId;
-            await RequestHelper.NotAllowedRequest(async () => await productController.RemoveProductFromStore(productId, 15));
+            var model = new ChangeProductQuantityModel
+            {
+                ProductId = productId,
+                Quantity = 15
+            };
+            await RequestHelper.NotAllowedRequest(async () => await productController.RemoveProductFromStore(model));
         }
 
         [Test]
@@ -218,7 +252,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var productController = GetProductController();
             ControllerHelper.SetControllerContext(productController, user);
             var productId = Guid.NewGuid();
-            await RequestHelper.NotFoundRequest(async () => await productController.RemoveProductFromStore(productId, 15));
+            var model = new ChangeProductQuantityModel
+            {
+                ProductId = productId,
+                Quantity = 15
+            };
+            await RequestHelper.NotFoundRequest(async () => await productController.RemoveProductFromStore(model));
         }
 
         [Test]
@@ -238,13 +277,14 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var productNewDescription = "newDescription";
             var productNewCategory = Category.Caulkgun;
 
-            var objectResult = await RequestHelper.OkRequest(async () => await productController.UpdateProduct(
-                productId: product.Id,
-                name: productNewName,
-                price: productNewPrice,
-                description: productNewDescription,
-                category: productNewCategory
-                ));
+            var objectResult = await RequestHelper.OkRequest(async () => await productController.UpdateProduct(new()
+            {
+                ProductId = product.Id,
+                Name = productNewName,
+                Price = productNewPrice,
+                Description = productNewDescription,
+                Category = productNewCategory
+            }));
             var resultProduct = objectResult.Value as Product;
             Assert.IsNotNull(resultProduct);
             Assert.AreEqual(resultProduct!.Id, product.Id);
@@ -261,7 +301,7 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var productController = GetProductController();
             ControllerHelper.SetControllerContext(productController, user);
             var productId = ProductHelper.TestProductId;
-            await RequestHelper.NotAllowedRequest(async () => await productController.UpdateProduct(productId, name: "nameNotFound"));
+            await RequestHelper.NotAllowedRequest(async () => await productController.UpdateProduct(new() { ProductId = productId, Name = "nameNotFound" }));
         }
 
         [Test]
@@ -271,7 +311,7 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var productController = GetProductController();
             ControllerHelper.SetControllerContext(productController, user);
             var productId = Guid.NewGuid();
-            await RequestHelper.NotFoundRequest(async () => await productController.UpdateProduct(productId, name: "nameNotFound"));
+            await RequestHelper.NotFoundRequest(async () => await productController.UpdateProduct(new() { ProductId = productId, Name = "nameNotFound" }));
         }
 
         private ProductController GetProductController(IProductRepository? productRepository = null, IUserRepository? userRepository = null,

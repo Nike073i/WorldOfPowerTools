@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorldOfPowerTools.API.Controllers;
+using WorldOfPowerTools.API.RequestModels.Order;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Models.Entities;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Models.ValueObject;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Authorization;
@@ -174,8 +175,13 @@ namespace WorldOfPowerTools.API.Test.Controllers
 
             var address = AddressHelper.CreateAddress();
             var contactData = ContactDataHelper.CreateContactData();
-
-            var objectResult = await RequestHelper.OkRequest(async () => await orderController.CreateOrder(user.Id, address, contactData));
+            var model = new CreateOrderModel
+            {
+                UserId = user.Id,
+                Address = address,
+                ContactData = contactData
+            };
+            var objectResult = await RequestHelper.OkRequest(async () => await orderController.CreateOrder(model));
             var resultOrder = objectResult!.Value as Order;
             Assert.IsNotNull(resultOrder);
             Assert.AreEqual(resultOrder!.UserId, user.Id);
@@ -197,7 +203,13 @@ namespace WorldOfPowerTools.API.Test.Controllers
             ControllerHelper.SetControllerContext(orderController, claims);
             var address = AddressHelper.CreateAddress();
             var contactData = ContactDataHelper.CreateContactData();
-            await RequestHelper.NotAllowedRequest(async () => await orderController.CreateOrder(userId, address, contactData));
+            var model = new CreateOrderModel
+            {
+                UserId = userId,
+                Address = address,
+                ContactData = contactData
+            };
+            await RequestHelper.NotAllowedRequest(async () => await orderController.CreateOrder(model));
         }
 
         [Test]
@@ -208,7 +220,13 @@ namespace WorldOfPowerTools.API.Test.Controllers
             ControllerHelper.SetControllerContext(orderController, claims);
             var address = AddressHelper.CreateAddress();
             var contactData = ContactDataHelper.CreateContactData();
-            await RequestHelper.NotAllowedRequest(async () => await orderController.CreateOrder(userId: Guid.NewGuid(), address, contactData));
+            var model = new CreateOrderModel
+            {
+                UserId = Guid.NewGuid(),
+                Address = address,
+                ContactData = contactData
+            };
+            await RequestHelper.NotAllowedRequest(async () => await orderController.CreateOrder(model));
         }
 
         [Test]
@@ -419,7 +437,7 @@ namespace WorldOfPowerTools.API.Test.Controllers
             priceCalculator ??= new PriceCalculator(productRepository);
             saleService ??= new SaleService(priceCalculator, cart, orderRepository, productRepository, userRepository);
 
-            return new OrderController(cart, saleService, securityService, orderRepository, userRepository);
+            return new OrderController(cart, saleService, securityService, orderRepository);
         }
     }
 }

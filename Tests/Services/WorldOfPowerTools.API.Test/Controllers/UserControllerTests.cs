@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorldOfPowerTools.API.Controllers;
+using WorldOfPowerTools.API.RequestModels.User;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Models.Entities;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Authorization;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Controllers;
@@ -118,7 +119,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             ControllerHelper.SetControllerContext(userController, claims);
 
             var newRights = Actions.Products | Actions.Cart;
-            var objectResult = await RequestHelper.OkRequest(async () => await userController.AddUserRights(user.Id, newRights));
+            var model = new ChangeUserRightModel
+            {
+                UserId = user.Id,
+                Action = newRights
+            };
+            var objectResult = await RequestHelper.OkRequest(async () => await userController.AddUserRights(model));
             var resultUser = objectResult.Value as User;
 
             Assert.NotNull(resultUser);
@@ -132,7 +138,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var user = ClaimsPrincipalHelper.CreateUser(userRights: Actions.None);
             var userController = GetUserController();
             ControllerHelper.SetControllerContext(userController, user);
-            await RequestHelper.NotAllowedRequest(async () => await userController.AddUserRights(Guid.NewGuid(), Actions.Users));
+            var model = new ChangeUserRightModel
+            {
+                UserId = Guid.NewGuid(),
+                Action = Actions.Users
+            };
+            await RequestHelper.NotAllowedRequest(async () => await userController.AddUserRights(model));
         }
 
         [Test]
@@ -141,7 +152,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var user = ClaimsPrincipalHelper.CreateUser(userRights: Actions.Users);
             var userController = GetUserController();
             ControllerHelper.SetControllerContext(userController, user);
-            await RequestHelper.NotFoundRequest(async () => await userController.AddUserRights(Guid.NewGuid(), Actions.Users));
+            var model = new ChangeUserRightModel
+            {
+                UserId = Guid.NewGuid(),
+                Action = Actions.Users
+            };
+            await RequestHelper.NotFoundRequest(async () => await userController.AddUserRights(model));
         }
 
         [Test]
@@ -155,7 +171,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             ControllerHelper.SetControllerContext(userController, claims);
 
             var removeRights = Actions.Products | Actions.Cart;
-            var objectResult = await RequestHelper.OkRequest(async () => await userController.RemoveUserRights(user.Id, removeRights));
+            var model = new ChangeUserRightModel
+            {
+                UserId = user.Id,
+                Action = removeRights
+            };
+            var objectResult = await RequestHelper.OkRequest(async () => await userController.RemoveUserRights(model));
             var resultUser = objectResult.Value as User;
 
             Assert.NotNull(resultUser);
@@ -169,7 +190,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var user = ClaimsPrincipalHelper.CreateUser(userRights: Actions.None);
             var userController = GetUserController();
             ControllerHelper.SetControllerContext(userController, user);
-            await RequestHelper.NotAllowedRequest(async () => await userController.RemoveUserRights(Guid.NewGuid(), Actions.Users));
+            var model = new ChangeUserRightModel
+            {
+                UserId = Guid.NewGuid(),
+                Action = Actions.Users
+            };
+            await RequestHelper.NotAllowedRequest(async () => await userController.RemoveUserRights(model));
         }
 
         [Test]
@@ -178,7 +204,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var user = ClaimsPrincipalHelper.CreateUser(userRights: Actions.Users);
             var userController = GetUserController();
             ControllerHelper.SetControllerContext(userController, user);
-            await RequestHelper.NotFoundRequest(async () => await userController.RemoveUserRights(Guid.NewGuid(), Actions.Users));
+            var model = new ChangeUserRightModel
+            {
+                UserId = Guid.NewGuid(),
+                Action = Actions.Users
+            };
+            await RequestHelper.NotFoundRequest(async () => await userController.RemoveUserRights(model));
         }
 
         private UserController GetUserController(IUserRepository? userRepository = null, SecurityService? securityService = null)

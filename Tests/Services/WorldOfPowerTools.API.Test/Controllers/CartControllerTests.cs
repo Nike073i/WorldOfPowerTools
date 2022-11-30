@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorldOfPowerTools.API.Controllers;
+using WorldOfPowerTools.API.RequestModels.Cart;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Data;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Models.Entities;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Authorization;
@@ -71,8 +72,13 @@ namespace WorldOfPowerTools.API.Test.Controllers
 
             var claims = ClaimsPrincipalHelper.CreateUser(userRights: CartController.AddProductAccess, userId: user!.Id);
             ControllerHelper.SetControllerContext(cartController, claims);
-
-            var objectResult = await RequestHelper.OkRequest(async () => await cartController.AddProduct(user.Id, product.Id, quantity));
+            var model = new AddProductToCartModel
+            {
+                UserId = user.Id,
+                ProductId = product.Id,
+                Quantity = quantity
+            };
+            var objectResult = await RequestHelper.OkRequest(async () => await cartController.AddProduct(model));
             var cartLines = await cartLineRepository.GetByUserIdAsync(user.Id);
             Assert.True(cartLines.Any());
             var cartLine = cartLines.First(cl => cl.ProductId == product.Id);
@@ -86,7 +92,13 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var cartController = GetCartController();
             var claims = ClaimsPrincipalHelper.CreateUser(userRights: Actions.None, userId: userId);
             ControllerHelper.SetControllerContext(cartController, claims);
-            await RequestHelper.NotAllowedRequest(async () => await cartController.AddProduct(userId, productId: Guid.NewGuid(), 150));
+            var model = new AddProductToCartModel
+            {
+                UserId = userId,
+                ProductId = Guid.NewGuid(),
+                Quantity = 150
+            };
+            await RequestHelper.NotAllowedRequest(async () => await cartController.AddProduct(model));
         }
 
         [Test]
@@ -95,7 +107,13 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var cartController = GetCartController();
             var claims = ClaimsPrincipalHelper.CreateUser(userRights: CartController.AddProductAccess, userId: Guid.NewGuid());
             ControllerHelper.SetControllerContext(cartController, claims);
-            await RequestHelper.NotAllowedRequest(async () => await cartController.AddProduct(userId: Guid.NewGuid(), productId: Guid.NewGuid(), 150));
+            var model = new AddProductToCartModel
+            {
+                UserId = Guid.NewGuid(),
+                ProductId = Guid.NewGuid(),
+                Quantity = 150
+            };
+            await RequestHelper.NotAllowedRequest(async () => await cartController.AddProduct(model));
         }
 
         [Test]
@@ -115,7 +133,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var claims = ClaimsPrincipalHelper.CreateUser(userRights: CartController.RemoveProductAccess, userId: user.Id);
             ControllerHelper.SetControllerContext(cartController, claims);
 
-            var objectResult = await RequestHelper.OkRequest(async () => await cartController.RemoveProduct(user.Id, product.Id));
+            var model = new RemoveProductModel
+            {
+                UserId = user.Id,
+                ProductId = product.Id
+            };
+            var objectResult = await RequestHelper.OkRequest(async () => await cartController.RemoveProduct(model));
             var cartLines = await cartLineRepository.GetByUserIdAsync(user.Id);
             Assert.True(!cartLines.Any());
         }
@@ -127,7 +150,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var cartController = GetCartController();
             var claims = ClaimsPrincipalHelper.CreateUser(userRights: Actions.None, userId: userId);
             ControllerHelper.SetControllerContext(cartController, claims);
-            await RequestHelper.NotAllowedRequest(async () => await cartController.RemoveProduct(userId, productId: Guid.NewGuid()));
+            var model = new RemoveProductModel
+            {
+                UserId = userId,
+                ProductId = Guid.NewGuid()
+            };
+            await RequestHelper.NotAllowedRequest(async () => await cartController.RemoveProduct(model));
         }
 
         [Test]
@@ -136,7 +164,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var cartController = GetCartController();
             var claims = ClaimsPrincipalHelper.CreateUser(userRights: CartController.RemoveProductAccess, userId: Guid.NewGuid());
             ControllerHelper.SetControllerContext(cartController, claims);
-            await RequestHelper.NotAllowedRequest(async () => await cartController.RemoveProduct(userId: Guid.NewGuid(), productId: Guid.NewGuid()));
+            var model = new RemoveProductModel
+            {
+                UserId = Guid.NewGuid(),
+                ProductId = Guid.NewGuid()
+            };
+            await RequestHelper.NotAllowedRequest(async () => await cartController.RemoveProduct(model));
         }
 
         [Test]
@@ -184,7 +217,7 @@ namespace WorldOfPowerTools.API.Test.Controllers
             securityService ??= new SecurityService(userRepository);
             cart ??= new Cart(cartLineRepository);
 
-            return new CartController(securityService, cart, userRepository);
+            return new CartController(securityService, cart);
         }
     }
 }

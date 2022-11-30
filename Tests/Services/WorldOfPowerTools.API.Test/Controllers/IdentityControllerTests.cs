@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System.Threading.Tasks;
 using WorldOfPowerTools.API.Controllers;
+using WorldOfPowerTools.API.RequestModels.Identity;
 using WorldOfPowerTools.API.Services;
 using WorldOfPowerTools.API.Test.Infrastructure.Helpers.Web.Requests;
 using WorldOfPowerTools.DAL.Repositories;
@@ -20,7 +21,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             await userRepository.SaveAsync(new("userName", "221068207e125b97beb4e2d062e888b1", Domain.Enums.Actions.Cart));
 
             var identityController = GetIdentityController(userRepository: userRepository);
-            var objectResult = await RequestHelper.OkRequest(async () => await identityController.Authorization("userName", "userPassword"));
+            var model = new IdentityModel
+            {
+                Login = "userName",
+                Password = "userPassword"
+            };
+            var objectResult = await RequestHelper.OkRequest(async () => await identityController.Authorization(model));
             var jwt = objectResult.Value as string;
             Assert.IsNotNull(jwt);
         }
@@ -29,7 +35,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
         public async Task AuthorizationNotFound()
         {
             var identityController = GetIdentityController();
-            await RequestHelper.NotFoundRequest(async () => await identityController.Authorization("userName", "userPassword"));
+            var model = new IdentityModel
+            {
+                Login = "userName",
+                Password = "userPassword"
+            };
+            await RequestHelper.NotFoundRequest(async () => await identityController.Authorization(model));
         }
 
         [Test]
@@ -38,7 +49,12 @@ namespace WorldOfPowerTools.API.Test.Controllers
             var identityController = GetIdentityController();
             var userlogin = "newUserLogin";
             var userPassword = "newUserPassword";
-            var objectResult = await RequestHelper.OkRequest(async () => await identityController.Registration(userlogin, userPassword));
+            var model = new IdentityModel
+            {
+                Login = userlogin,
+                Password = userPassword
+            };
+            var objectResult = await RequestHelper.OkRequest(async () => await identityController.Registration(model));
             var resultUser = objectResult.Value as User;
             Assert.IsNotNull(resultUser);
             Assert.AreEqual(resultUser!.Login, userlogin);
