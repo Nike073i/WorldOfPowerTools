@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using WorldOfPowerTools.API.Extensions;
 using WorldOfPowerTools.API.RequestModels.Cart;
 using WorldOfPowerTools.Domain.Enums;
-using WorldOfPowerTools.Domain.Repositories;
 using WorldOfPowerTools.Domain.Services;
 
 namespace WorldOfPowerTools.API.Controllers
@@ -92,11 +91,11 @@ namespace WorldOfPowerTools.API.Controllers
             return Ok("Удален из корзины");
         }
 
-        [HttpDelete("clear")]
+        [HttpDelete("clear/{userId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> ClearCart([Required][FromBody] Guid userId)
+        public async Task<IActionResult> ClearCart([Required] Guid userId)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), ClearCartAccess) ||
                 !_securityService.IsIndividualOperation(User.GetUserId(), userId))

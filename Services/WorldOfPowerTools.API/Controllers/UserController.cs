@@ -54,7 +54,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> RemoveUser([Required][FromBody] Guid id)
+        public async Task<IActionResult> RemoveUser([Required] Guid id)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), RemoveAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
