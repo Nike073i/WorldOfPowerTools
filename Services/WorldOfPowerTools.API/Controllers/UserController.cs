@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using WorldOfPowerTools.API.Extensions;
+using WorldOfPowerTools.API.RequestModels.User;
 using WorldOfPowerTools.Domain.Enums;
 using WorldOfPowerTools.Domain.Repositories;
 using WorldOfPowerTools.Domain.Services;
@@ -53,7 +54,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> RemoveUser([Required] Guid id)
+        public async Task<IActionResult> RemoveUser([Required][FromBody] Guid id)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), RemoveAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
@@ -72,10 +73,12 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AddUserRights([Required] Guid userId, [Required] Actions action)
+        public async Task<IActionResult> AddUserRights([FromBody] ChangeUserRightModel model)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), AddUserRightsAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
+            var userId = model.UserId;
+            var action = model.Action;
             try
             {
                 var user = await _userRepository.GetByIdAsync(userId);
@@ -95,10 +98,12 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> RemoveUserRights([Required] Guid userId, [Required] Actions action)
+        public async Task<IActionResult> RemoveUserRights([FromBody] ChangeUserRightModel model)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), RemoveUserRightsAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
+            var userId = model.UserId;
+            var action = model.Action;
             try
             {
                 var user = await _userRepository.GetByIdAsync(userId);

@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using WorldOfPowerTools.API.Extensions;
+using WorldOfPowerTools.API.RequestModels.Order;
 using WorldOfPowerTools.Domain.Enums;
 using WorldOfPowerTools.Domain.Exceptions;
-using WorldOfPowerTools.Domain.Models.ObjectValues;
 using WorldOfPowerTools.Domain.Repositories;
 using WorldOfPowerTools.Domain.Services;
 
@@ -31,15 +31,13 @@ namespace WorldOfPowerTools.API.Controllers
         private readonly Cart _cart;
 
         private readonly IOrderRepository _orderRepository;
-        private readonly IUserRepository _userRepository;
 
-        public OrderController(Cart cart, SaleService saleService, SecurityService securityService, IOrderRepository orderRepository, IUserRepository userRepository)
+        public OrderController(Cart cart, SaleService saleService, SecurityService securityService, IOrderRepository orderRepository)
         {
             _cart = cart;
             _saleService = saleService;
             _securityService = securityService;
             _orderRepository = orderRepository;
-            _userRepository = userRepository;
         }
 
         [HttpGet("all")]
@@ -78,11 +76,14 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> CreateOrder([Required] Guid userId, [FromQuery][Required] Address address, [FromQuery][Required] ContactData contactData)
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderModel model)
         {
+            var userId = model.UserId;
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), CreateOrderAccess) ||
                 !_securityService.IsIndividualOperation(User.GetUserId(), userId))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
+            var address = model.Address;
+            var contactData = model.ContactData;
             try
             {
                 var cartProduct = await _cart.GetUserProducts(userId);
@@ -100,7 +101,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> CancelOrder([Required] Guid orderId)
+        public async Task<IActionResult> CancelOrder([Required][FromBody] Guid orderId)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), CancelOrderAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
@@ -119,7 +120,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> SendOrder([Required] Guid orderId)
+        public async Task<IActionResult> SendOrder([Required][FromBody] Guid orderId)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), SendOrderAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
@@ -137,7 +138,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> ConfirmOrder([Required] Guid orderId)
+        public async Task<IActionResult> ConfirmOrder([Required][FromBody] Guid orderId)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), ConfirmOrderAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
@@ -155,7 +156,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> DeliveOrder([Required] Guid orderId)
+        public async Task<IActionResult> DeliveOrder([Required][FromBody] Guid orderId)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), DeliveOrderAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
@@ -173,7 +174,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> ReceiveOrder([Required] Guid orderId)
+        public async Task<IActionResult> ReceiveOrder([Required][FromBody] Guid orderId)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), ReceiveOrderAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");

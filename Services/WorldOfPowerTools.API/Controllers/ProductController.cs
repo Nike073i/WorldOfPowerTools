@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using WorldOfPowerTools.API.Extensions;
+using WorldOfPowerTools.API.RequestModels.Product;
 using WorldOfPowerTools.Domain.Enums;
 using WorldOfPowerTools.Domain.Exceptions;
 using WorldOfPowerTools.Domain.Models.Entities;
@@ -61,11 +62,16 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> AddProduct([Required] string name, [Required] double price, [Required] string description, [Required] int quantity,
-            Category category = Category.Screwdriver, bool availability = true)
+        public async Task<IActionResult> AddProduct([FromBody] AddProductModel model)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), AddProductAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
+            var name = model.Name;
+            var price = model.Price;
+            var category = model.Category;
+            var description = model.Description;
+            var quantity = model.Quantity;
+            var availability = model.Availability;
             try
             {
                 var product = new Product(name, price, category, description, quantity, availability);
@@ -82,7 +88,7 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> RemoveProduct([Required] Guid id)
+        public async Task<IActionResult> RemoveProduct([Required][FromBody] Guid id)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), RemoveProductAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
@@ -104,10 +110,12 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> AddProductToStore([Required] Guid productId, [Required] int quantity)
+        public async Task<IActionResult> AddProductToStore([FromBody] ChangeProductQuantityModel model)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), LoadingProductAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
+            var productId = model.ProductId;
+            var quantity = model.Quantity;
             try
             {
                 var product = await _productRepository.GetByIdAsync(productId);
@@ -127,10 +135,12 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> RemoveProductFromStore([Required] Guid productId, [Required] int quantity)
+        public async Task<IActionResult> RemoveProductFromStore([FromBody] ChangeProductQuantityModel model)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), UnloadingProductAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
+            var productId = model.ProductId;
+            var quantity = model.Quantity;
             try
             {
                 var product = await _productRepository.GetByIdAsync(productId);
@@ -150,10 +160,15 @@ namespace WorldOfPowerTools.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-        public async Task<IActionResult> UpdateProduct([Required] Guid productId, string? name = null, double? price = null, string? description = null, Category? category = null)
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductModel model)
         {
             if (!_securityService.UserOperationAvailability(User.GetUserRights(), UpdateProductAccess))
                 return StatusCode(StatusCodes.Status405MethodNotAllowed, "У вас нет доступа к этой операции");
+            var productId = model.ProductId;
+            var name = model.Name;
+            var price = model.Price;
+            var category = model.Category;
+            var description = model.Description;
             try
             {
                 var product = await _productRepository.GetByIdAsync(productId);
