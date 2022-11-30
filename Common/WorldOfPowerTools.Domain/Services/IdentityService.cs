@@ -35,7 +35,7 @@ namespace WorldOfPowerTools.Domain.Services
             if (string.IsNullOrEmpty(password)) throw new ArgumentNullException(nameof(password));
             var userByLogin = await _userRepository.GetByLoginAsync(login);
             if (userByLogin != null) throw new UserExistsException(UserExistErrorMessage);
-            var newUser = new User(login, password, _defaultUserActions);
+            var newUser = new User(login, PasswordHash(password), _defaultUserActions);
             return await _userRepository.SaveAsync(newUser);
         }
 
