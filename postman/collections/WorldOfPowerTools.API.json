@@ -1,0 +1,1687 @@
+{
+	"info": {
+		"_postman_id": "69a210f9-0371-4589-ac36-da0f89109b89",
+		"name": "WorldOfPowerTools.API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "14562207-69a210f9-0371-4589-ac36-da0f89109b89"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "Cart",
+					"item": [
+						{
+							"name": "/api/Cart/:userId",
+							"id": "d71cdeaa-6702-47e8-802d-b67d331df948",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Cart/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Cart",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "d501a140-3d94-2115-2684-c2da4de27841",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Cart/add",
+							"id": "0780efa7-eb0f-43ee-8e46-97c2f845e42f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"productId\": \"urn:uuid:b9bbb123-29fa-a871-eb4f-a4bc00bdb4ee\",\n  \"quantity\": -20122086,\n  \"userId\": \"urn:uuid:2010649d-4eb0-2ea3-7086-2b9b4637ee55\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Cart/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Cart",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Cart/remove",
+							"id": "1e7d17b8-50fc-42eb-a33b-347521d74f05",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"productId\": \"urn:uuid:d7fbbdb2-e8df-3b45-4712-d847a8ebee81\",\n  \"userId\": \"urn:uuid:d8345f17-c9b5-1eb4-e879-7dfd7b45ed09\",\n  \"quantity\": -73267205\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Cart/remove",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Cart",
+										"remove"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Cart/clear/:userId",
+							"id": "72e88cb7-12e3-4398-88c0-45ccf47f3d88",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Cart/clear/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Cart",
+										"clear",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "d501a140-3d94-2115-2684-c2da4de27841",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "6fa5e70f-1654-4a7f-b170-e98fcefb6a4d"
+				},
+				{
+					"name": "Identity",
+					"item": [
+						{
+							"name": "/api/Identity/auth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1181fd87-42f9-432f-92e5-bcbb1b2b2704",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "f602e954-1d27-4b9c-af26-8f844d349c5f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"{{user_sa_login}}\",\n  \"password\": \"{{user_sa_password}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Identity/auth",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Identity",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Identity/auth bad_request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1181fd87-42f9-432f-92e5-bcbb1b2b2704",
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Bad authentication\", function() {\r",
+											"    pm.expect(pm.response.text()).to.eql(\"Аутентификация не пройдена\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "5e85deda-8ce9-4368-b2f2-e88ea60cd2b7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"{{$randomUserName}}\",\n  \"password\": \"{{$randomPassword}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Identity/auth",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Identity",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Identity/registration success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bd34e2c1-5557-4080-a03d-a2f350904fb5",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id not null\", function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).have.property('id');\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "d1c8c82f-cba5-48f1-9850-971e06d1c0c2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"{{$randomUserName}}\",\n  \"password\": \"{{$randomPassword}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Identity/registration",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Identity",
+										"registration"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "c9fe4e12-c6e4-4e80-a787-5cbc1265b92a"
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "/api/Order/all",
+							"id": "881432d0-2f15-48fd-90a3-704bdb2d07c5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/all?skip=0&count=71182168",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"all"
+									],
+									"query": [
+										{
+											"key": "skip",
+											"value": "0"
+										},
+										{
+											"key": "count",
+											"value": "71182168"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Order/:id",
+							"id": "f73290df-8c66-49e3-b48b-0690773f4275",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "d501a140-3d94-2115-2684-c2da4de27841",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Order/user/:userId",
+							"id": "5b19ffa5-751d-42cc-a4dd-3c144bda3497",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/user/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"user",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "d501a140-3d94-2115-2684-c2da4de27841",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Order/create",
+							"id": "5d4e8af8-2c1a-4bbe-b931-f136ae141c9a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"address\": {\n    \"city\": \"non\",\n    \"country\": \"Duis pariatur Excepteur dolor\",\n    \"flat\": -14565668,\n    \"house\": \"nulla laborum\",\n    \"postalCode\": \"reprehenderit ea ullamco consectetur\",\n    \"street\": \"aute fugiat la\"\n  },\n  \"contactData\": {\n    \"contactNumber\": \"ipsum exercitation\",\n    \"email\": \"officia sed Duis laborum\"\n  },\n  \"userId\": \"urn:uuid:7f49caea-e102-aa38-ee2e-f8432a18fd84\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Order/cancel/:orderId",
+							"id": "8d7dad25-b63f-44b1-a1e7-b1c5d72becb7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/cancel/:orderId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"cancel",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "d501a140-3d94-2115-2684-c2da4de27841",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Order/send/:orderId",
+							"id": "a57b902a-ebc6-4d90-bdd7-3963ab9c99d5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/send/:orderId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"send",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "d501a140-3d94-2115-2684-c2da4de27841",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Order/confirm/:orderId",
+							"id": "92f70bbe-2820-481f-9060-cbf380118101",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/confirm/:orderId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"confirm",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "d501a140-3d94-2115-2684-c2da4de27841",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Order/delive/:orderId",
+							"id": "a826bd21-547e-4ff5-911c-d5ba978f0c3c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/delive/:orderId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"delive",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "d501a140-3d94-2115-2684-c2da4de27841",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Order/received/:orderId",
+							"id": "cef3ffe0-61ce-48e2-8095-6303484782d8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/received/:orderId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"received",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "d501a140-3d94-2115-2684-c2da4de27841",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "39128fbd-3ee9-45f7-9706-a441c3df86c6"
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "get_all",
+							"item": [
+								{
+									"name": "success",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fc8476d3-04c1-49b0-a34b-ce62517ae557",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Not empty array\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.be.an('array').not.to.be.empty;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "55555206-c568-4bea-8578-f6af015fe95d",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"all"
+											],
+											"query": [
+												{
+													"key": "skip",
+													"value": "0",
+													"disabled": true
+												},
+												{
+													"key": "count",
+													"value": "71182168",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "437e2a2b-f0c2-4569-b7a7-78b0ac233a66"
+						},
+						{
+							"name": "get_by_id",
+							"item": [
+								{
+									"name": "not_found",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "f8eaefff-21a8-4b03-8890-fe072f012a8c",
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Продукт по указанному Id не найден\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "c041fe83-343f-4578-848c-132f4ffbca13",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "{{$randomUUID}}",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "5806a715-db60-4193-a93a-a51fd44b35f6"
+						},
+						{
+							"name": "get_by_category",
+							"item": [
+								{
+									"name": "success",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ed244ae8-97c6-48b2-a750-c7c4b2eaf903",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Not empty array\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.be.an('array').not.to.be.empty;\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "259337ee-5c01-4494-8ec5-0b6c258a1c3c",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/category?category={{product_category}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"category"
+											],
+											"query": [
+												{
+													"key": "category",
+													"value": "{{product_category}}",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "2cb554b2-697a-42c1-89e6-3d07d9b31649"
+						},
+						{
+							"name": "post_add",
+							"item": [
+								{
+									"name": "success",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ac0c6088-64ef-48d2-b8b9-0348af7d7395",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"id not null\", function() {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).have.property('id');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "d4b50628-eaff-49bd-9606-afd3f9c461b0",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"{{$randomDomainName}}\",\r\n  \"price\": \"{{$randomPrice}}\",\r\n  \"description\": \"{{$randomJobDescriptor}}\",\r\n  \"category\": \"{{product_category}}\",\r\n  \"availability\": true,\r\n  \"quantity\": 150\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/add",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "not_auth",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ac0c6088-64ef-48d2-b8b9-0348af7d7395",
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "281fe3cf-0d4e-44ba-87fb-4a821f8c7fa3",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"{{$randomDomainName}}\",\r\n  \"price\": \"{{$randomPrice}}\",\r\n  \"description\": \"{{$randomJobDescriptor}}\",\r\n  \"category\": \"{{product_category}}\",\r\n  \"availability\": true,\r\n  \"quantity\": 150\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/add",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"add"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "8a89ea54-49cf-4333-90be-92a3e1e45106"
+						},
+						{
+							"name": "put_loading",
+							"item": [
+								{
+									"name": "not_auth",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "1814ddaf-11c7-4f4e-b37e-4deff8f6309e",
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "8838c117-751e-4dbe-9417-394f8c0d55fd",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"productId\": \"7692c7aa-7b0f-c0eb-11cb-63a65149b431\",\n  \"quantity\": 15\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/loading",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"loading"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "not_found",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "f7be6135-b74b-45d2-9e7d-4c2c4374a062",
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "8616edc8-4e3f-4044-8656-bd559904a959",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"productId\": \"{{$randomUUID}}\",\n  \"quantity\": 15\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/loading",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"loading"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "3af07767-63b6-4e26-aef4-3216a7ce233d"
+						},
+						{
+							"name": "put_unloading",
+							"item": [
+								{
+									"name": "not_auth",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "cb98a907-f7a7-45c8-a465-7bf905b42996",
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "ab659e1c-f152-4605-9be0-27ea71fde355",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"productId\": \"7692c7aa-7b0f-c0eb-11cb-63a65149b431\",\n  \"quantity\": 15\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/unloading",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"unloading"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "not_found",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "d2a77e88-8d1d-4e22-9b5f-e2b8dc8d7bee",
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "d54c6343-077f-4dcc-811e-10caa0be5f2a",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"productId\": \"{{$randomUUID}}\",\n  \"quantity\": 15\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/unloading",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"unloading"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "3b303de3-8239-40e4-8e9a-e4816d049f65"
+						},
+						{
+							"name": "put_update",
+							"item": [
+								{
+									"name": "not_auth",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "2b9afcdd-636c-4a4e-a568-d40a03467fcd",
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "a3a92b13-f44e-4f19-9dcf-e5ba0034a8ca",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"productId\": \"34baeccd-58ed-4fa3-c37d-6e8a0d70565e\",\n  \"name\": \"{{$randomDomainName}}\",\n  \"price\": \"{{$randomPrice}}\",\n  \"description\": \"{{$randomJobDescriptor}}\",\n  \"category\": \"{{product_category}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/update",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "not_found",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "d2a77e88-8d1d-4e22-9b5f-e2b8dc8d7bee",
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "a6e19b74-ac21-4c31-95cf-9f2307053d8f",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"productId\": \"{{$randomUUID}}\",\n  \"name\": \"{{$randomDomainName}}\",\n  \"price\": \"{{$randomPrice}}\",\n  \"description\": \"{{$randomJobDescriptor}}\",\n  \"category\": \"{{product_category}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/update",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												"update"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "abd50a4a-8766-4b4b-a857-01df2c5a8f8a"
+						},
+						{
+							"name": "delete_by_id",
+							"item": [
+								{
+									"name": "not_auth",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "8253a8cd-8e10-4391-ad79-c48e722e934e",
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"id": "37353f3b-dc11-462a-abfa-5545bdcd6298",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "d501a140-3d94-2115-2684-c2da4de27841",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "d710c89c-02d9-479f-afe7-a1e5493fdc29"
+						}
+					],
+					"id": "77962c96-34ec-436b-b81d-111c8ea835aa"
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/User/:id",
+									"id": "7cf05a88-f064-49e9-8b7d-a7214d0dba84",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/User/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"User",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "d501a140-3d94-2115-2684-c2da4de27841",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/api/User/:id",
+									"id": "1dd39aa7-d838-48a7-a989-b2f79294b2ac",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/User/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"User",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "d501a140-3d94-2115-2684-c2da4de27841",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "fa8c2389-41da-4948-a60f-f7f800f63154"
+						},
+						{
+							"name": "/api/User/all",
+							"id": "8c7a9229-36c3-4c9c-ba08-a405880f136f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/User/all?skip=0&count=71182168",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"User",
+										"all"
+									],
+									"query": [
+										{
+											"key": "skip",
+											"value": "0"
+										},
+										{
+											"key": "count",
+											"value": "71182168"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/User/add_rights",
+							"id": "314ec5da-ed04-4dc4-8589-cc4495736255",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"action\": \"Users\",\n  \"userId\": \"3717d7d2-6077-9c85-e6d6-30d9afdbb3f9\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/User/add_rights",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"User",
+										"add_rights"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/User/remove_rights",
+							"id": "e3bd6bcf-90a4-4a7e-9410-0873d26b9565",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"action\": \"Users\",\n  \"userId\": \"3717d7d2-6077-9c85-e6d6-30d9afdbb3f9\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/User/remove_rights",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"User",
+										"remove_rights"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "436a4120-3075-4722-bb46-4fe3ea468189"
+				}
+			],
+			"id": "ff7c9c7e-a771-4548-8123-f7e627ebd61e"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidXNlcjUiLCJndWlkIjoiODQ3ZjEwZDYtZjI4Zi00NmVkLTk5N2ItMDhkYWQzMGRhZmUxIiwicmlnaHRzIjoiQ2FydCwgTXlPcmRlcnMsIFByb2R1Y3RzLCBBbGxPcmRlcnMsIFVzZXJzIiwiZXhwIjoxNjY5OTg1OTAyLCJpc3MiOiJXb3JsZE9mUG93ZXJUb29scy5BUEkiLCJhdWQiOiJXb3JsZE9mUG93ZXJUb29scy5DbGllbnQifQ.RsRWDPiO8xfRtvrEMz0B_KCBXZI5smqQ2b7sHCc6MCY",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "be7f721d-52f4-4d02-bea6-95e00fe3a4a7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bf43e7c1-e11a-465a-a1be-72179df61959",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "be1d0f6a-ccf6-4367-8c4d-30f8a15188ba",
+			"key": "baseUrl",
+			"value": "https://localhost:7158",
+			"type": "string"
+		},
+		{
+			"id": "cf21539d-d666-4b35-a869-39545f00a45c",
+			"key": "product1_id",
+			"value": "d501a140-3d94-2115-2684-c2da4de27841"
+		},
+		{
+			"id": "32200a28-d62c-478b-99d2-494647a8be90",
+			"key": "product_category",
+			"value": "Perforator"
+		},
+		{
+			"id": "93d6d6c6-62e2-4d0b-bdde-38c95db3547f",
+			"key": "user_sa_login",
+			"value": "user5",
+			"type": "string"
+		},
+		{
+			"id": "2da6c572-c77f-44c9-8a37-ee7486477d97",
+			"key": "user_sa_password",
+			"value": "password5",
+			"type": "string"
+		}
+	]
+}
